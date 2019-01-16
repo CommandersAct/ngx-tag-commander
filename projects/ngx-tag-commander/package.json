@@ -1,0 +1,14 @@
+{
+  "name": "ngx-tag-commander",
+  "version": "1.0.0",
+  "author": "Mendoza Miguel, Lenoir Jérémie",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TagCommander/ngx-tag-commander"
+  },
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
+  }
+}

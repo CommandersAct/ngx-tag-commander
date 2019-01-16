@@ -1,0 +1,56 @@
+<div [ngClass]="isMsgDisplayed ? 'msg-card-displayed' : 'msg-card-not-displayed'">thanks you for your purchase</div>
+<h1 class="main-eshop-title">E-commerce page</h1>
+<div [tcSetVars]="{'env_template': defaultEnv}"></div>
+<div class="article-container">
+    <div class="left-container">
+        <div class="item-name">
+            <h2>{{ pageItem.name }}</h2>
+        </div>
+        <div class="image-container">
+            <img src="assets/Tag-Commander.png"/>
+        </div>
+        <div class=product-information>
+            <h5>Product Information</h5>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+        <div>
+            <h5>Quantity</h5>
+            <div class="quantity-handler-container">
+                <div class="grouped">
+                    <button class="sm-button red-500" (click)="removeQuantity()"> - </button>
+                    <span>{{ pageItem.quantity }}</span>
+                    <button class="sm-button green-500" (click)="addQuantity()"> + </button>        
+                </div>
+                <span class="price">{{ pageItem.price * pageItem.quantity }} {{ defaultStoreCurrency }}</span>
+                <button class="button blue-500 cart-button" (click)="addToCart()" [tcEvent]="'test'" [tcEventLabel]="'test'" [tcEventObj]="cartItems">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    <div class="right-container">
+        <div class="cart tag-50">
+            <h3>Cart</h3>
+            <ul>
+                <li *ngFor="let item of cartItems; let i = index">
+                    <h5>{{ item.name }}</h5>
+                    <div class="cart-quantity">
+                        <div class="grouped">
+                            <button class="sm-button red-500" (click)="removeQuantityFromCartItem(i)" [tcEvent]="{'eventLabel': 'test', 'data': item}"> - </button>
+                            <span>{{ item.quantity }}</span>
+                            <button class="sm-button green-500" (click)="addQuantityFromCartItem(i)" [tcEvent]="{'eventLabel': 'test', 'data': item}"> + </button>
+                        </div>
+                        <div class="cart-item-price">
+                            {{ item.quantity * item.price }} {{ defaultStoreCurrency }}
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="total-price">
+                <span>Total:</span>
+                <span class="grand-total"> {{ cartGrandTotal() }} {{ defaultStoreCurrency }}</span>
+                <button class="button green-500 buy-button" (click)="checkout(); isMsgDisplayed = true" [tcEvent]="{'eventLabel': 'test', 'data': item}">Buy</button>
+            </div>
+        </div>
+    </div>
+</div>
