@@ -23,12 +23,10 @@ bower install ngx-tag-commander
 npm i ngx-tag-commander
 ```
 
-Or alternatively, grab the dist/index.ts and include it in your project
-
 In your application, declare the ngx-tag-commander module dependency. in your app module:
 
 ```typescript
-import { NgxTagCommanderModule } from './ngx-tag-commander/ngx-tag-commander.module';
+import { NgxTagCommanderModule } from 'ngx-tag-commander';
 ```
 
 ### 2- In your application, declare dependency injection:
@@ -48,7 +46,7 @@ import { NgxTagCommanderModule } from './ngx-tag-commander/ngx-tag-commander.mod
 ### 3- add your Tag commander containers and start tracking:
 
 ```JavaScript
-import { TagCommanderService } from 'tag-commander';
+import { TagCommanderService } from 'ngx-tag-commander';
 ...
 export class AppModule {
   constructor(tcService: TagCommanderService) {
@@ -60,11 +58,11 @@ export class AppModule {
 }
 ```
 
-Congratulations! [angularjs-tag-commander](https://github.com/TagCommander/angular-tag-commander) is ready 
+Congratulations! [ngx-tag-commander](https://github.com/TagCommander/ngx-tag-commander) is ready 
 
 ## Declaring TagCommander in your Controller
 ```js
-import { TagCommanderService } from './ngx-tag-commander/tag-commander.service/tag-commander.service';
+import { TagCommanderService } from 'ngx-tag-commander';
 ...
 export class MyComponent {
 constructor(private tcService: TagCommanderService) { }
@@ -105,10 +103,10 @@ const appRoutes: Routes = [
 this will reload the specified containers, with the specified options
 
 ## Set Vars
-### In a controller
 The `setVar` call allows to set your `tc_vars`.
 ```js
-TagCommanderService.setTcVars({
+constructor(private tcService: TagCommanderService) {
+    tcService.setTcVars({
     env_template : "shop",
     env_work : "dev",
     env_language : "en",
@@ -116,52 +114,52 @@ TagCommanderService.setTcVars({
     user_logged : "true",
     user_age: "32",
     user_newcustomer : "false",
-});
-// you can also override some varible
-if (isNewUser) {
-    TagCommanderService.setTcVars({
-        user_newcustomer : "true",
     });
-}
-// or set/update them individualy
-TagCommanderService.setTcVar('env_template', 'super_shop');
+  // you can also override some varible
+    if (isNewUser) {
+      tcService.setTcVars({
+      user_newcustomer : "true",
+      });
+    }
+    // or set/update them individualy
+    tcService.setTcVar('env_template', 'super_shop');
 
-// you can also remove a var
-TagCommanderService.removeTcVars('env_template');
+    // you can also remove a var
+    tcService.removeTcVar('env_template');
 }
 ```
 ### As a directive
 You can use the directive tcSetVars direcly on any html node
 ```html
-<html-element class="sm-button green-500" tc-set-vars='{"env_language": "fr"}'></html-element>
+<html-element class="sm-button green-500" [tcSetVars]="{'env_language': 'fr'}"></html-element>
 
-<!-- other exemples -->
+<!-- other exemple -->
 <!-- defaultLanguage being an attribut of your component -->
-<template class="sm-button green-500" tcSetVars="{'env_language': defaultLanguage}"></template>
-<div class="sm-button green-500" tc-set-vars='{"env_language": $scope.default_language}'></div>
-```
-## Get Var
-###In your controller
-```js
-let myVar = TagCommanderService.getTcVar('VarKey');
+<div class="sm-button green-500" [tcSetVars]="{'env_template': defaultEnv}"></div>
 ```
 
 ## Capture Events
-### In a controller
 ```js
-let eventId = '1234';
-let data = '{"env_language": theEventVar}';
-
-TagCommanderService.captureEvent(eventId, data);
+constructor(private tcService: TagCommanderService) {
+    // {string} eventLabel the name of your event
+    let eventLabel=  'NameEvent';
+    // {HTMLElement} element the HTMLelement on witch the event is attached
+    let element = 'button';
+    // {object} data the data you want to transmit
+    let data = {"env_language": 'theEventVar'};
+  
+    tcService.captureEvent(eventLabel,element, data);
+   }
 ```
 ### As a directive
 ```html
-<button tcEvent="{'eventId': myEventId, 'data': {'env_language': envLanguage}}"> change to default language </button>
+<button [tcEvent]="'test'" [tcEventLabel]="'test'" [tcEventObj]="cartItems"> Add Items in ShopCart </button>
 
 ```
 
 ## How to reload your container
-When you update your varible you also need to update your container to propagate the changes
+In your app.module.ts on one of your routes please write tcInclude inside the data part
+
 ```js
 var idc = '1234';
 var ids = '1234';
@@ -173,32 +171,64 @@ var options = {
         "privacy"
     ]
 };
-TagCommanderService.reloadContainer(ids, idc, options);
+this.tcService.reloadContainer(ids, idc, options);
 // or you can reload all the containers
-TagCommanderService.reloadAllContainers(options);
+this.tcService.reloadAllContainers(options);
 ```
 ## Automatic reload of your containers by tracking Routes
 ### The configuration
 
-you need to set TagCommanderProvider.trackRoutes(true); to true in your app configuration
+you need to set tcService.trackRoutes(true); to true in your app configuration
 
+```js
+const appRoutes: Routes = [
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+    data: {
+      tcInclude: [{
+        idc:  12,
+        ids: 4056,
+        options: {
+          exclusions: ["datastorage", "deduplication"]
+        }
+      }]
+    }
+  },
+  {
+    path: 'home',
+    component: IndexPageComponent,
+    data: {
+      tcInclude: [{
+        idc:  12,
+        ids: 4056,
+        options: {
+          exclusions: ["datastorage", "deduplication"]
+        }
+      }]
+    }
+  }
+]
+```
 > to be updated
 ```js
-TagCommanderService.trackRoutes(true);
-```
-then you can configure the your route by using the tcRealoadOnly option in your route configuration
-
-```js
-
+export class AppModule { 
+  constructor(tcService: TagCommanderService) {
+  tcService.trackRoutes(true);
+  }
+}
 ```
 If you don't set the TagCommanderProvider.trackRoutes(true); (or you set it to false) you will have to reload your container manually
 
 ```js
 // somewhere in your controller
 // reload a specifique container
-TagCommanderService.reloadContainer(ids, idc, options);
+ngOnInit() {
+this.tcService.reloadContainer(ids, idc, options);
 // or you can reload all the containers
-TagCommanderService.reloadAllContainer(options);
+this.tcService.reloadAllContainer(options);
+ }
 ```
 
 ## Sample app
