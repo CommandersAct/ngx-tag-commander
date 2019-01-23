@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TagCommanderService } from '../../../projects/ngx-tag-commander/src/lib/tag-commander.service/tag-commander.service';
+import { TagCommanderService } from 'ngx-tag-commander';
+
 
 @Component({
   selector: 'app-shop-page',
@@ -7,6 +8,7 @@ import { TagCommanderService } from '../../../projects/ngx-tag-commander/src/lib
   styleUrls: ['./shop-page.component.scss']
 })
 export class ShopPageComponent implements OnInit {
+  
   pageItem: Item = {
     id: '1',
     name: 'TagCommander',
@@ -28,7 +30,12 @@ export class ShopPageComponent implements OnInit {
   constructor(private tcService: TagCommanderService) { }
 
   ngOnInit() {
+      // this.tcService.reloadAllContainers({});
+      // this.tcService.reloadContainer('4056', '12', {
+      //   exclusions: ["datastorage", "deduplication"]
+      // });
   }
+
   removeQuantity() {
     if (this.pageItem.quantity > 1) {
       this.pageItem.quantity--;
