@@ -88,11 +88,17 @@ const appRoutes: Routes = [
   providers: [WindowRef],
   bootstrap: [AppComponent]
 })
+
+
+
+
+
 export class AppModule { 
   constructor(tcService: TagCommanderService) {
     tcService.setDebug(true);
     tcService.trackRoutes(true);
     tcService.addContainer('container_body', '/assets/tag-commander-body.js', 'body');
     tcService.addContainer('container_head', '/assets/tag-commander-head.js', 'head');
+    // tcService.reloadAllContainers({})
   }
 }
