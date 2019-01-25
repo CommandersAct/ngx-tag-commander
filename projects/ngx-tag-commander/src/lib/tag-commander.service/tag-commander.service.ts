@@ -136,11 +136,18 @@ export class TagCommanderService {
   //  * will reload all the containers
   //  * @param {object} options can contain some options in a form of an object
   //  */
-  reloadAllContainers(options:object):void {
+  reloadAllContainers(options:object):number {
     this.logger.debug('reloadAllContainers', options);
     options = options || {};
     this.logger.debug('Reload all containers ', typeof options === 'object' ? 'with options ' + options : '');
-    this.winRef.nativeWindow.container.reload(options);
+
+    if(!this.winRef.nativeWindow.tC) {
+        return setTimeout(() => {
+            this.reloadAllContainers(options);
+        },1000);
+    }
+    this.winRef.nativeWindow.tC.container.reload(options);
+    
   };
 
   // /**
@@ -149,10 +156,16 @@ export class TagCommanderService {
   //  * @param {number} idc
   //  * @param {object} options can contain some options in a form of an object
   //  */
-  reloadContainer(ids:string, idc:string, options:object):void {
+  reloadContainer(ids:string, idc:string, options:object):number {
     var options = options || {};
     this.logger.debug('Reload container ids: ' + ids + ' idc: ' + idc, typeof options === 'object' ? 'with options: ' + options : '');
-    this.winRef.nativeWindow['container_' + ids + '_' + idc].reload(options);
+
+    if(!this.winRef.nativeWindow.tC) {
+      return setTimeout(() => {
+          this.reloadContainer(ids,idc,options);
+      },1000);
+  }
+    this.winRef.nativeWindow.tC['container_' + ids + '_' + idc].reload(options);
   };
 
   // /**
