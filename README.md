@@ -16,8 +16,6 @@ The quick start is designed to give you a simple, working example for the most c
 You can install the module from a package manager of your choice directly from the command line
 
 ```sh
-# Bower
-bower install ngx-tag-commander
 
 # NPM
 npm i ngx-tag-commander
