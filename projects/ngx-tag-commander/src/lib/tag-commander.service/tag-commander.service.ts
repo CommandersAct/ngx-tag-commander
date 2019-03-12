@@ -177,7 +177,7 @@ export class TagCommanderService {
   captureEvent(eventLabel:string, element:any, data:object):void {
     this.logger.debug('captureEvent', eventLabel, element, data);
     if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
-      if (eventLabel in Object.keys(this.winRef.nativeWindow.tC.event)){
+      if (eventLabel in this.winRef.nativeWindow.tC.event){
         this.winRef.nativeWindow.tC.event[eventLabel](element, data);
       } else {
         this.logger.error('the key ' + eventLabel + ' you specified in the catpure event does not existe');
