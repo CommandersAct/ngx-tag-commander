@@ -107,7 +107,7 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  * @param {*} tcVar
   //  */
-  setTcVar(tcKey: string, tcVar: any): void {
+  setTcVar(tcKey: string, tcVar: any) {
     if (!this.winRef.nativeWindow.tc_vars) {
       return setTimeout(() => {
         this.setTcVar(tcKey, tcVar);
