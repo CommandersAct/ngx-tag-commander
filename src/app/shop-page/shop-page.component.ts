@@ -27,7 +27,17 @@ export class ShopPageComponent implements OnInit {
   defaultStoreCurrency: string = '€';
   isMsgDisplayed: boolean = false;
 
-  constructor(private tcService: TagCommanderService) { }
+  constructor(private tcService: TagCommanderService) { 
+      tcService.setTcVars({
+      env_template: "shop",
+      env_work: "dev",
+      env_language: "en",
+      user_id: "124",
+      user_logged: "true",
+      user_age: "32",
+      user_newcustomer: "false"
+    });
+   }
 
   ngOnInit() {
       // this.tcService.reloadAllContainers({});
