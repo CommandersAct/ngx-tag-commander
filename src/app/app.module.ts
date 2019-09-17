@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     pathMatch: 'full',
     data: {
       tcInclude: [{
-        idc:  12,
+        idc: 12,
         ids: 4056,
         options: {
           exclusions: ["datastorage", "deduplication"]
@@ -36,7 +36,7 @@ const appRoutes: Routes = [
     component: IndexPageComponent,
     data: {
       tcInclude: [{
-        idc:  12,
+        idc: 12,
         ids: 4056,
         options: {
           exclusions: ["datastorage", "deduplication"]
@@ -49,7 +49,7 @@ const appRoutes: Routes = [
     component: ShopPageComponent,
     data: {
       tcInclude: [{
-        idc:  12,
+        idc: 12,
         ids: 4056,
         options: {
           exclusions: ["datastorage", "deduplication"]
@@ -62,7 +62,7 @@ const appRoutes: Routes = [
     component: DashboardPageComponent,
     data: {
       tcInclude: [{
-        'idc':  12,
+        'idc': 12,
         'ids': 4056,
         options: {
           exclusions: ["datastorage", "deduplication"]
@@ -93,7 +93,7 @@ const appRoutes: Routes = [
 
 
 
-export class AppModule { 
+export class AppModule {
   constructor(tcService: TagCommanderService) {
     tcService.setDebug(true);
     tcService.trackRoutes(true);
