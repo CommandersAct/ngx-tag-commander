@@ -1,26 +1,19 @@
 // our root app component
-import { NGXLogger, CustomNGXLoggerService, NgxLoggerLevel } from 'ngx-logger';
 import { Router, RoutesRecognized } from '@angular/router';
 import { WindowRef } from './WindowRef';
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TagCommanderService {
   _tcContainers: Array<any> = [];
   pageEvent: any;
-  debug: any;
   _trackRoutes = false;
-  private logger: NGXLogger;
+  old_console_log = console.log;
 
   constructor(
     private winRef: WindowRef,
-    private customLogger: CustomNGXLoggerService,
     private router: Router
   ) {
-    this.logger = customLogger.create({ level: NgxLoggerLevel.DEBUG });
-
     this.router.events.subscribe(_data => {
       if (_data instanceof RoutesRecognized && this._trackRoutes) {
         if (typeof _data.state.root.firstChild.data.tcInclude !== 'undefined') {
@@ -50,16 +43,16 @@ export class TagCommanderService {
     tagContainer.setAttribute('src', uri);
     tagContainer.setAttribute('id', id);
     if (typeof node !== 'string') {
-      this.logger.warn(
+      this.old_console_log(
         'you didn\'t specify where you wanted to place the script, it will be placed in the head by default'
-      );
+      )
       document.querySelector('head').appendChild(tagContainer);
     } else if (node.toLowerCase() === 'head' || node.toLowerCase() === 'body') {
       document.querySelector(node.toLowerCase()).appendChild(tagContainer);
     } else {
-      this.logger.warn(
+      this.old_console_log(
         'you didn\'t correctily specify where you wanted to place the script, it will be placed in the head by default'
-      );
+      )
       document.querySelector('head').appendChild(tagContainer);
     }
   }
@@ -86,11 +79,10 @@ export class TagCommanderService {
   //  * @param {boolean} debug if set to true it will activate the debug msg default is false
   //  */
   setDebug(debug: boolean): void {
-    this.debug = debug;
     if (debug) {
-      this.logger.updateConfig({ level: NgxLoggerLevel.DEBUG });
+      this.old_console_log;
     } else {
-      this.logger.updateConfig({ level: NgxLoggerLevel.OFF });
+      this.old_console_log = function () { }
     }
   }
 
@@ -122,7 +114,7 @@ export class TagCommanderService {
   //  * @param {object} vars
   //  */
   setTcVars(vars: object): void {
-    this.logger.debug('setTcVars', vars);
+    this.old_console_log('setTcVars', vars)
     const listOfVars = Object.keys(vars);
     for (let i = 0; i < listOfVars.length; i++) {
       this.setTcVar(listOfVars[i], vars[listOfVars[i]]);
@@ -134,7 +126,7 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  */
   getTcVar(tcKey: string): any {
-    this.logger.debug('getTcVars', tcKey);
+    this.old_console_log('getTcVars', tcKey);
     return this.winRef.nativeWindow.tc_vars[tcKey] === null
       ? this.winRef.nativeWindow.tc_vars[tcKey]
       : false;
@@ -145,7 +137,7 @@ export class TagCommanderService {
   //  * @param {string} varKey
   //  */
   removeTcVar(varKey: string): void {
-    this.logger.debug('removeTcVars', varKey);
+    this.old_console_log('removeTcVars', varKey);
     delete this.winRef.nativeWindow.tc_vars[varKey];
   }
 
@@ -154,12 +146,12 @@ export class TagCommanderService {
   //  * @param {object} options can contain some options in a form of an object
   //  */
   reloadAllContainers(options: object) {
-    this.logger.debug('reloadAllContainers', options);
+    this.old_console_log('reloadAllContainers', options);
     options = options || {};
-    this.logger.debug(
+    this.old_console_log(
       'Reload all containers ',
       typeof options === 'object' ? 'with options ' + options : ''
-    );
+    )
 
     if (!this.winRef.nativeWindow.tC) {
       return setTimeout(() => {
@@ -177,7 +169,7 @@ export class TagCommanderService {
   //  */
   reloadContainer(ids: string, idc: string, options: object) {
     const opt = options || {};
-    this.logger.debug(
+    this.old_console_log(
       'Reload container ids: ' + ids + ' idc: ' + idc,
       typeof opt === 'object' ? 'with options: ' + opt : ''
     );
@@ -201,7 +193,7 @@ export class TagCommanderService {
     if (reloadCapture === true) {
       clearTimeout(reloadFunction);
     } else {
-      this.logger.debug('captureEvent', eventLabel, element, data);
+      this.old_console_log('captureEvent', eventLabel, element, data)
       if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
         if (eventLabel in this.winRef.nativeWindow.tC.event) {
           this.winRef.nativeWindow.tC.event[eventLabel](element, data);
