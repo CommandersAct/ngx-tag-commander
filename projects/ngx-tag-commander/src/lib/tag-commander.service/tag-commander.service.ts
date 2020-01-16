@@ -23,7 +23,7 @@ export class TagCommanderService {
 
     this.router.events.subscribe(_data => {
       if (_data instanceof RoutesRecognized && this._trackRoutes) {
-        if (_data.state.root.firstChild.data.tcInclude === undefined) {
+        if (_data.state.root.firstChild.data.tcInclude !== undefined) {
           let data: Array<any> = _data.state.root.firstChild.data.tcInclude;
           data.forEach(container => {
             this.reloadContainer(
@@ -162,7 +162,7 @@ export class TagCommanderService {
     );
 
     if (!this.winRef.nativeWindow.tC) {
-      return setTimeout(() => {
+      return window.setTimeout(() => {
         this.reloadAllContainers(options);
       }, 1000);
     }
@@ -183,7 +183,7 @@ export class TagCommanderService {
     );
 
     if (!this.winRef.nativeWindow.tC) {
-      return setTimeout(() => {
+      return window.setTimeout(() => {
         this.reloadContainer(ids, idc, options);
       }, 1000);
     }
