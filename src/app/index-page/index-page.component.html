@@ -87,24 +87,25 @@ npm i ngx-tag-commander
 then in your routes:
 <pre>
 <code class="keyword">const</code> <code class="varible">appRoutes</code>: <code class="class">Routes</code> = [
-{{ '{' }}
+    {{ '{' }}
     <code class="varible">path</code>: <code class="string">'/home'</code>,
     <code class="varible">redirectTo</code>: <code class="string">'/home'</code>,
     <code class="varible">pathMatch</code>: <code class="string">'full'</code>,
     <code class="varible">data</code>: {{ '{' }}
-        <code class="varible">tcInclude</code> {{ '[{' }}
-            <code class="varible">idc</code>  12,
-            <code class="varible">ids</code> 4056,
-            <code class="varible">options</code> {{ '{' }}
+        <code class="varible">tcInclude</code>: {{ '[{' }}
+            <code class="varible">idc</code>: 12,
+            <code class="varible">ids</code>: 4056,
+            <code class="varible">options</code>: {{ '{' }}
                 <code class="varible">exclusions</code> {{ '[' }}<code class="string">"datastorage"</code>, <code class="string">"deduplication"</code>{{ ']' }}
             {{ '}' }}
         {{ '}' }},
         {{ '{' }}
             <code class="varible">idc</code>:  11,
             <code class="varible">ids</code>: 4055,
-        {{ '}]' }}
-    {{ '}' }}
-{{ '}' }},
+            {{ '}]' }}
+        {{ '}' }}
+    {{ '}' }},
+];
 </pre>
 <p>
     this will reload the specified containers, with the specified options
