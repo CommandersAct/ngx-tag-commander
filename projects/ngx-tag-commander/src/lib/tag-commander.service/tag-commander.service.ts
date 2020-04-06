@@ -136,8 +136,8 @@ export class TagCommanderService {
   getTcVar(tcKey: string): any {
     this.logger.debug("getTcVars", tcKey);
     return this.winRef.nativeWindow.tc_vars[tcKey] === null
-      ? this.winRef.nativeWindow.tc_vars[tcKey]
-      : false;
+      ? false
+      : this.winRef.nativeWindow.tc_vars[tcKey];
   }
 
   // /**
