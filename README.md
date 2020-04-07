@@ -102,7 +102,7 @@ const appRoutes: Routes = [
         'idc':  12,
         'ids': 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          // Data Layer options if needed
         }
       },
       {
@@ -167,9 +167,9 @@ constructor(private tcService: TagCommanderService, private windowRef :WindowRef
     windowRef.nativeWindow.tc_vars = {};
 	...
 	// retrieve container variables
-    tcService.getTcVar("coucou"));
+    tcService.getTcVar("your_var_key"));
     // remove variable
-    tcService.removeTcVar('jdd')
+    tcService.removeTcVar('your_var_key')
   }
 ```
 
@@ -194,18 +194,16 @@ constructor(private tcService: TagCommanderService) {
 ```
 
 ## How to reload your container
-In your app.module.ts on one of your routes please write tcInclude inside the data part
+In your app.module.ts on one of your routes please write tcInclude inside the data part. You also need to state the event Page in the options.
 
 ```js
 var idc = '1234';
 var ids = '1234';
 var options = {
-    exclusions: [
-        "datastorage",
-        "deduplication",
-        "internalvars",
-        "privacy"
-    ]
+    events: {page: [{},{}]},
+    // ...
+    // other options
+    // ...
 };
 this.tcService.reloadContainer(ids, idc, options);
 // or you can reload all the containers
@@ -227,7 +225,7 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          // Data Layer options
         }
       }]
     }
@@ -240,14 +238,33 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+			// Data Layer options
         }
       }]
     }
   }
 ];
 ```
+### Exclusions
 
+You can state an exclusion array to your options object like below :
+
+```js
+tcInclude: [{
+	idc:  12,
+	ids: 4056,
+	options: {
+	    exclusions: [
+        "datastorage",
+        "deduplication",
+        "internalvars",
+        "privacy"
+    	]
+	}
+}]
+
+```
+Please see Tag Commander documentation for other options
 
 
 ## Sample app
@@ -268,9 +285,9 @@ After forking you will need to run the following from a command line to get your
 
 After install you have the following commands available to you from a command line:
 
-```npx ng-packagr -p projects/ngx-tag-commander/package.json````
+Build the library by :
 
-Build the library
+ ```ng build NGX-TAG-COMMANDER ```
 
 ## Documentation
 
