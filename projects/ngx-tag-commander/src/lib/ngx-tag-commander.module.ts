@@ -5,13 +5,10 @@ import { TagCommanderService} from './tag-commander.service/tag-commander.servic
 import { TcSetVarsDirective } from './tc-set-vars.directive/tc-set-vars.directive';
 import { TcEventDirective } from './tc-event.directive/tc-event.directive';
 
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-
 @NgModule({
   declarations: [TcSetVarsDirective, TcEventDirective],
   imports: [
-    CommonModule,
-    LoggerModule.forRoot({level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
+    CommonModule
   ],
   exports: [TcSetVarsDirective, TcEventDirective],
   providers: [TagCommanderService]

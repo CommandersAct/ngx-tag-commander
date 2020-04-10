@@ -1,6 +1,6 @@
 {
   "name": "ngx-tag-commander",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Mendoza Miguel, Lenoir Jérémie",
   "license": "ISC",
   "repository": {
@@ -10,8 +10,5 @@
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0"
-  },
-  "dependencies": {
-    "ngx-logger": "^3.3.8"
   }
 }
