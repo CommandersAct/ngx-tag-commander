@@ -14,7 +14,7 @@ export class TagCommanderService {
 
   debug_logger = function (...args : any[]){
     if (this.debug) {
-      console.warn.apply(console, args);
+      console.log.apply(console, args);
     }
   };
 
@@ -132,9 +132,10 @@ export class TagCommanderService {
   //  */
   getTcVar(tcKey: string): any {
     this.debug_logger("getTcVars", tcKey);
-    return this.winRef.nativeWindow.tc_vars[tcKey] === null
-      ? false
-      : this.winRef.nativeWindow.tc_vars[tcKey];
+    if (this.winRef.nativeWindow.tc_vars[tcKey] === null){
+        throw new Error('tc_var is undefined. Check that it\'s properly initialized');
+    }
+    return this.winRef.nativeWindow.tc_vars[tcKey];
   }
 
   // /**
