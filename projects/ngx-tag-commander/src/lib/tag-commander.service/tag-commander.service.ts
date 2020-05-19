@@ -25,17 +25,17 @@ export class TagCommanderService {
 
     this.router.events.subscribe(_data => {
       if (_data instanceof ActivationEnd && this._trackRoutes) {
-        if (_data.state.root.firstChild.data.tcInclude !== undefined) {
-          let data: Array<any> = _data.state.root.firstChild.data.tcInclude;
+        if (_data.snapshot.data.tcInclude !== undefined) {
+          let data: Array<any> = _data.snapshot.data.tcInclude;
           data.forEach(container => {
             this.reloadContainer(
               container["ids"],
               container["idc"],
               container["options"]
-            );
-          });
+              );
+            });
+          }
         }
-      }
     });
   }
 
