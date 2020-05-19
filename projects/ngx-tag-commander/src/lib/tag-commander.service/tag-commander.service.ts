@@ -1,5 +1,5 @@
 //our root app component
-import { Router, RoutesRecognized } from "@angular/router";
+import { Router, ActivationEnd } from "@angular/router";
 import { WindowRef } from "./WindowRef";
 import { Injectable } from "@angular/core";
 
@@ -24,7 +24,7 @@ export class TagCommanderService {
   ) {
 
     this.router.events.subscribe(_data => {
-      if (_data instanceof RoutesRecognized && this._trackRoutes) {
+      if (_data instanceof ActivationEnd && this._trackRoutes) {
         if (_data.state.root.firstChild.data.tcInclude !== undefined) {
           let data: Array<any> = _data.state.root.firstChild.data.tcInclude;
           data.forEach(container => {
