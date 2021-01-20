@@ -277,6 +277,8 @@ then go to [http://localhost:4200/](http://localhost:4200/)
 
 ## Development
 
+With Node 10
+
 After forking you will need to run the following from a command line to get your environment setup:
 
 1. ```yarn install```
