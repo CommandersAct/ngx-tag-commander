@@ -1,8 +1,10 @@
 //our root app component
 import { Router, ActivationEnd } from "@angular/router";
 import { WindowRef } from "./WindowRef";
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
+import {DOCUMENT} from '@angular/common';
 
+/** @dynamic */
 @Injectable({
   providedIn: "root"
 })
@@ -20,7 +22,8 @@ export class TagCommanderService {
 
   constructor(
     private winRef: WindowRef,
-    private router: Router
+    private router: Router,
+    @Inject(DOCUMENT) private _doc: Document
   ) {
 
     this.router.events.subscribe(_data => {
@@ -47,7 +50,7 @@ export class TagCommanderService {
   // */
   addContainer(id: string, uri: string, node: string): void {
     this._tcContainers.push({ id: id, uri: uri });
-    let tagContainer = document.createElement("script");
+    let tagContainer = this._doc.createElement("script");
     tagContainer.setAttribute("type", "text/javascript");
     tagContainer.setAttribute("src", uri);
     tagContainer.setAttribute("id", id);
@@ -55,14 +58,14 @@ export class TagCommanderService {
       this.debug_logger(
         "you didn't specify where you wanted to place the script, it will be placed in the head by default"
       );
-      document.querySelector("head").appendChild(tagContainer);
+      this._doc.querySelector("head").appendChild(tagContainer);
     } else if (node.toLowerCase() === "head" || node.toLowerCase() === "body") {
-      document.querySelector(node.toLowerCase()).appendChild(tagContainer);
+      this._doc.querySelector(node.toLowerCase()).appendChild(tagContainer);
     } else {
       this.debug_logger(
         "you didn't correctily specify where you wanted to place the script, it will be placed in the head by default"
       );
-      document.querySelector("head").appendChild(tagContainer);
+      this._doc.querySelector("head").appendChild(tagContainer);
     }
   }
 
@@ -71,10 +74,10 @@ export class TagCommanderService {
   //  * @param {string} id
   //  */
   removeContainer(id: string): void {
-    let container = document.getElementById(id);
+    let container = this._doc.getElementById(id);
     let containers = this._tcContainers.slice(0);
 
-    document.querySelector("head").removeChild(container);
+    this._doc.querySelector("head").removeChild(container);
 
     for (let i = 0; i < containers.length; i++) {
       if (containers[i].id === id) {
