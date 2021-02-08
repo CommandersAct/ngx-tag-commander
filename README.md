@@ -14,7 +14,24 @@ This service lets you integrate Tag Commander in your AngularX (2+) applications
 ## Installation and Quick Start
 The quick start is designed to give you a simple, working example for the most common usage scenario. There are numerous other ways to configure and use this library as explained in the documentation.
 
-### 1- Installation:
+### 1- Before installing the plugin
+
+The plugin doesn't replace the standard setup of a container because you may need to use the containers outside of the plugin.
+
+Initialize your datalayer so that it's ready for the container and plugin, without losing any data. Do it as soon as possible on your website.
+```
+tc_vars = {}
+```
+
+Include your containers with the usual script tag in head or body. In order to get a container, you need to connect to the Commanders Act's admin interface.
+
+```
+<script text="text/javascript" src="tc_my_container_1.js"></script>
+```
+
+### 2- Installation:
+
+
 You can install the module from a package manager of your choice directly from the command line
 
 ```
@@ -28,7 +45,7 @@ In your application, declare the ngx-tag-commander module dependency. in your ap
 import { NgxTagCommanderModule } from 'ngx-tag-commander';
 ```
 
-### 2- In your application, declare dependency injection:
+### 3- In your application, declare dependency injection:
 
 ```typescript
 ...
@@ -49,23 +66,7 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
 
 ```
 
-### 3- add your Tag commander containers and start tracking:
-
-```JavaScript
-import { TagCommanderService } from 'ngx-tag-commander';
-...
-export class AppModule {
-  constructor(tcService: TagCommanderService) {
-    ...
-    tcService.addContainer('container_body', '/path/to/your/tag-commander.js', 'body');
-    tcService.addContainer('container_head', '/path/to/your/other/tag-commander.js', 'head');
-    ...
-  }
-}
-```
-
-Congratulations! ngx-tag-commander is ready 
-
+You are now ready to use the ngx-tag-commander plugin.
 ## Declaring TagCommander in your Controller
 ```js
 import { TagCommanderService } from 'ngx-tag-commander';
@@ -291,13 +292,15 @@ Build the library by :
 
 ## Documentation
 
-- ```TagCommanderService.addContainer( id: string, uri : string, node : string )```
+- DEPRECATED ```TagCommanderService.addContainer( id: string, uri : string, node : string )```
 
 	- id : id the id the script node will have
 	- uri : uri the source of the script
 	- node : the node on witch the script will be placed, it can either be head or body
 
-- ```TagCommanderService.removeContainer( id : string )```
+  It's not recommended to use this method because the container is loaded asynchronously without any way to know when it's done.
+
+- DEPRECATED ```TagCommanderService.removeContainer( id : string )```
 
 	- id : id the id the script node will have
 
