@@ -137,8 +137,8 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  */
   getTcVar(tcKey: string): any {
-    this.debug_logger("getTcVars", tcKey);
     if(isPlatformBrowser(this.platformId)){
+    this.debug_logger("getTcVars", tcKey);
       if (this.winRef.nativeWindow.tc_vars[tcKey] === null){
           throw new Error('tc_var is undefined. Check that it\'s properly initialized');
       }
@@ -151,8 +151,8 @@ export class TagCommanderService {
   //  * @param {string} varKey
   //  */
   removeTcVar(varKey: string): void {
-    this.debug_logger("removeTcVars", varKey);
     if(isPlatformBrowser(this.platformId)){
+    this.debug_logger("removeTcVars", varKey);
       delete this.winRef.nativeWindow.tc_vars[varKey];
     }
   }
@@ -162,13 +162,13 @@ export class TagCommanderService {
   //  * @param {object} options can contain some options in a form of an object
   //  */
   reloadAllContainers(options: object): number {
+    if(isPlatformBrowser(this.platformId)){
     this.debug_logger("reloadAllContainers", options);
     options = options || {};
     this.debug_logger(
       "Reload all containers ",
       typeof options === "object" ? "with options " + options : ""
     );
-    if(isPlatformBrowser(this.platformId)){
       
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
@@ -186,12 +186,12 @@ export class TagCommanderService {
   //  * @param {object} options can contain some options in a form of an object
   //  */
   reloadContainer(ids: string, idc: string, options: object): number {
+    if(isPlatformBrowser(this.platformId)){
     var options = options || {};
     this.debug_logger(
       "Reload container ids: " + ids + " idc: " + idc,
       typeof options === "object" ? "with options: " + options : ""
     );
-    if(isPlatformBrowser(this.platformId)){
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
           this.reloadContainer(ids, idc, options);
