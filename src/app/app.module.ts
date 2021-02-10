@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     DashboardPageComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     BrowserModule,
     AppRoutingModule,
     NgxTagCommanderModule
