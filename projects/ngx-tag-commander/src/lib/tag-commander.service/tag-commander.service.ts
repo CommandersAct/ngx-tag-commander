@@ -1,8 +1,8 @@
 //our root app component
 import { Router, ActivationEnd } from "@angular/router";
 import { WindowRef } from "./WindowRef";
-import { Injectable, Inject } from "@angular/core";
-import {DOCUMENT} from '@angular/common';
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 
 /** @dynamic */
 @Injectable({
@@ -23,7 +23,8 @@ export class TagCommanderService {
   constructor(
     private winRef: WindowRef,
     private router: Router,
-    @Inject(DOCUMENT) private _doc: Document
+    @Inject(DOCUMENT) private _doc: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
     this.router.events.subscribe(_data => {
@@ -108,12 +109,14 @@ export class TagCommanderService {
   //  * @param {*} tcVar
   //  */
   setTcVar(tcKey: string, tcVar: any) {
-    if (!this.winRef.nativeWindow.tc_vars) {
-      return setTimeout(() => {
-        this.setTcVar(tcKey, tcVar);
-      }, 1000);
+    if(isPlatformBrowser(this.platformId)){
+      if (!this.winRef.nativeWindow.tc_vars) {
+        return setTimeout(() => {
+          this.setTcVar(tcKey, tcVar);
+        }, 1000);
+      }
+      this.winRef.nativeWindow.tc_vars[tcKey] = tcVar;
     }
-    this.winRef.nativeWindow.tc_vars[tcKey] = tcVar;
   }
 
   // /**
@@ -135,10 +138,12 @@ export class TagCommanderService {
   //  */
   getTcVar(tcKey: string): any {
     this.debug_logger("getTcVars", tcKey);
-    if (this.winRef.nativeWindow.tc_vars[tcKey] === null){
-        throw new Error('tc_var is undefined. Check that it\'s properly initialized');
+    if(isPlatformBrowser(this.platformId)){
+      if (this.winRef.nativeWindow.tc_vars[tcKey] === null){
+          throw new Error('tc_var is undefined. Check that it\'s properly initialized');
+      }
+      return this.winRef.nativeWindow.tc_vars[tcKey];
     }
-    return this.winRef.nativeWindow.tc_vars[tcKey];
   }
 
   // /**
@@ -147,7 +152,9 @@ export class TagCommanderService {
   //  */
   removeTcVar(varKey: string): void {
     this.debug_logger("removeTcVars", varKey);
-    delete this.winRef.nativeWindow.tc_vars[varKey];
+    if(isPlatformBrowser(this.platformId)){
+      delete this.winRef.nativeWindow.tc_vars[varKey];
+    }
   }
 
   // /**
@@ -161,13 +168,15 @@ export class TagCommanderService {
       "Reload all containers ",
       typeof options === "object" ? "with options " + options : ""
     );
-
-    if (!this.winRef.nativeWindow.tC) {
-      return window.setTimeout(() => {
-        this.reloadAllContainers(options);
-      }, 1000);
+    if(isPlatformBrowser(this.platformId)){
+      
+      if (!this.winRef.nativeWindow.tC) {
+        return window.setTimeout(() => {
+          this.reloadAllContainers(options);
+        }, 1000);
+      }
+      this.winRef.nativeWindow.tC.container.reload(options);
     }
-    this.winRef.nativeWindow.tC.container.reload(options);
   }
 
   // /**
@@ -182,13 +191,14 @@ export class TagCommanderService {
       "Reload container ids: " + ids + " idc: " + idc,
       typeof options === "object" ? "with options: " + options : ""
     );
-
-    if (!this.winRef.nativeWindow.tC) {
-      return window.setTimeout(() => {
-        this.reloadContainer(ids, idc, options);
-      }, 1000);
+    if(isPlatformBrowser(this.platformId)){
+      if (!this.winRef.nativeWindow.tC) {
+        return window.setTimeout(() => {
+          this.reloadContainer(ids, idc, options);
+        }, 1000);
+      }
+      this.winRef.nativeWindow.tC["container_" + ids + "_" + idc].reload(options);
     }
-    this.winRef.nativeWindow.tC["container_" + ids + "_" + idc].reload(options);
   }
 
   // /**
@@ -198,18 +208,20 @@ export class TagCommanderService {
   //  * @param {object} data the data you want to transmit
   //  */
   captureEvent(eventLabel: string, element: any, data: object, reloadCapture = false) {
-    if (reloadCapture === true) {
-      clearTimeout(reloadFunction);
-    } else {
-      this.debug_logger("captureEvent", eventLabel, element, data);
-      if (typeof this.winRef.nativeWindow.tC !== "undefined") {
-        if (eventLabel in this.winRef.nativeWindow.tC.event) {
-          this.winRef.nativeWindow.tC.event[eventLabel](element, data);
-        }
-        if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
-          var reloadFunction = setTimeout(() => {
-            this.captureEvent(eventLabel, element, data, reloadCapture = true);
-          }, 1000);
+    if(isPlatformBrowser(this.platformId)){
+      if (reloadCapture === true) {
+        clearTimeout(reloadFunction);
+      } else {
+        this.debug_logger("captureEvent", eventLabel, element, data);
+        if (typeof this.winRef.nativeWindow.tC !== "undefined") {
+          if (eventLabel in this.winRef.nativeWindow.tC.event) {
+            this.winRef.nativeWindow.tC.event[eventLabel](element, data);
+          }
+          if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
+            var reloadFunction = setTimeout(() => {
+              this.captureEvent(eventLabel, element, data, reloadCapture = true);
+            }, 1000);
+          }
         }
       }
     }
