@@ -125,10 +125,12 @@ export class TagCommanderService {
   //  * @param {object} vars
   //  */
   setTcVars(vars: object): void {
-    this.debug_logger("setTcVars", vars);
-    let listOfVars = Object.keys(vars);
-    for (var i = 0; i < listOfVars.length; i++) {
-      this.setTcVar(listOfVars[i], vars[listOfVars[i]]);
+    if(isPlatformBrowser(this.platformId)){
+      this.debug_logger("setTcVars", vars);
+      let listOfVars = Object.keys(vars);
+      for (var i = 0; i < listOfVars.length; i++) {
+        this.setTcVar(listOfVars[i], vars[listOfVars[i]]);
+      }
     }
   }
 
