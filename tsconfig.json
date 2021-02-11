@@ -26,5 +26,8 @@
         "dist/ngx-tag-commander/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
   }
 }

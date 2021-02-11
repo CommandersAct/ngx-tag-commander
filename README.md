@@ -39,13 +39,7 @@ You can install the module from a package manager of your choice directly from t
 npm i ngx-tag-commander
 ```
 
-In your application, declare the ngx-tag-commander module dependency. in your app module:
-
-```typescript
-import { NgxTagCommanderModule } from 'ngx-tag-commander';
-```
-
-### 3- In your application, declare dependency injection:
+### 3- In your application app.module.ts, declare dependency injection:
 
 ```typescript
 ...
