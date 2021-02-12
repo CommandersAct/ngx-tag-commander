@@ -18,17 +18,11 @@ The quick start is designed to give you a simple, working example for the most c
 
 The plugin doesn't replace the standard setup of a container because you may need to use the containers outside of the plugin.
 
-Initialize your datalayer so that it's ready for the container and plugin, without losing any data. Do it as soon as possible on your website.
-```
-tc_vars = {}
-```
-
-Include your containers with the usual script tag in head or body. In order to get a container, you need to connect to the Commanders Act's admin interface.
+Initialize your datalayer so that it's ready for the container and plugin, without losing any data. Do it as soon as possible on your website like in a `<script>` block in the head of your webapp.
 
 ```
-<script text="text/javascript" src="tc_my_container_1.js"></script>
+tc_vars = []
 ```
-
 ### 2- Installation:
 
 
@@ -39,7 +33,9 @@ You can install the module from a package manager of your choice directly from t
 npm i ngx-tag-commander
 ```
 
+
 ### 3- In your application app.module.ts, declare dependency injection:
+
 
 ```typescript
 ...
@@ -60,9 +56,29 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
 
 ```
 
+### 4- add your Tag commander containers and start tracking:
+
+```typescript
+import { TagCommanderService } from 'ngx-tag-commander';
+...
+export class AppModule {
+  constructor(tcService: TagCommanderService) {
+    ...
+    Promise.all([
+      tcService.addContainer('container_body', '/assets/tag-commander-body.js', 'body'),// Replace URL by the one of your container
+      tcService.addContainer('container_head', '/assets/tag-commander-head.js', 'head')
+    ]).then(() => {
+      //Insert the rest of your code here
+    })
+    ...
+  }
+}
+```
+
 You are now ready to use the ngx-tag-commander plugin.
+
 ## Declaring TagCommander in your Controller
-```js
+```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
 ...
 export class MyComponent {
@@ -73,7 +89,7 @@ constructor(private tcService: TagCommanderService) { }
 ## Declaring the route tracking
 first configure the module to track routes in app.module
 
-```js
+```typescript
 export class AppModule {
   constructor(tcService: TagCommanderService) {
     ...
@@ -84,7 +100,7 @@ export class AppModule {
 ```
 then in your routes:
 
-```js
+```typescript
 const appRoutes: Routes = [
   {
     path: '',
@@ -109,9 +125,9 @@ const appRoutes: Routes = [
 This will reload the specified containers, with the specified options
 
 ## Set Vars
-The `setVar` call allows to set your `tc_vars`.
+The `setTcVars` call allows you to set your `tc_vars`.
 
-```js
+```typescript
 constructor(private tcService: TagCommanderService) {
     tcService.setTcVars({
     env_template : "shop",
@@ -122,18 +138,18 @@ constructor(private tcService: TagCommanderService) {
     user_age: "32",
     user_newcustomer : "false",
     });
-  // you can also override some varible
+  // you can also override some variable
     if (isNewUser) {
       tcService.setTcVars({
       user_newcustomer : "true",
       });
     }
-    // or set/update them individualy
+    // or set/update them individually
     tcService.setTcVar('env_template', 'super_shop');
 }
 ```
 ### As a directive
-You can use the directive tcSetVars direcly on any html node
+You can use the directive tcSetVars directly on any html node
 
 ```html
 <html-element class="sm-button green-500" [tcSetVars]="{'env_language': 'fr'}"></html-element>
@@ -144,23 +160,13 @@ You can use the directive tcSetVars direcly on any html node
 ```
 ## Retrieve or Delete Variables
 
-In order to retrieve or delete container variables you first need to instanciate the data layer.
-Import ```WindowRef``` in your module
-
-```js
-import { WindowRef } from 'ngx-tag-commander';
-```
-
-Then in your constructor : 
-
-```js
+```typescript
 import { WindowRef } from 'ngx-tag-commander';
 
-constructor(private tcService: TagCommanderService, private windowRef :WindowRef) {
-    windowRef.nativeWindow.tc_vars = {};
+constructor(private tcService: TagCommanderService {
 	...
 	// retrieve container variables
-    tcService.getTcVar("your_var_key"));
+    tcService.getTcVar('your_var_key'));
     // remove variable
     tcService.removeTcVar('your_var_key')
   }
@@ -168,11 +174,11 @@ constructor(private tcService: TagCommanderService, private windowRef :WindowRef
 
 
 ## Capture Events
-```js
+```typescript
 constructor(private tcService: TagCommanderService) {
     // {string} eventLabel the name of your event
     let eventLabel=  'NameEvent';
-    // {HTMLElement} element the HTMLelement on witch the event is attached
+    // {HTMLElement} element the HTMLelement on which the event is attached
     let element = 'button';
     // {object} data the data you want to transmit
     let data = {"env_language": 'theEventVar'};
@@ -189,7 +195,7 @@ constructor(private tcService: TagCommanderService) {
 ## How to reload your container
 In your app.module.ts on one of your routes please write tcInclude inside the data part. You also need to state the event Page in the options.
 
-```js
+```typescript
 var idc = '1234';
 var ids = '1234';
 var options = {
@@ -207,7 +213,7 @@ this.tcService.reloadAllContainers(options);
 
 you need to set tcService.trackRoutes(true); to true in your app configuration
 
-```js
+```typescript
 const appRoutes: Routes = [
   {
     path: '',
@@ -242,7 +248,7 @@ const appRoutes: Routes = [
 
 You can state an exclusion array to your options object like below :
 
-```js
+```typescript
 tcInclude: [{
 	idc:  12,
 	ids: 4056,
@@ -286,15 +292,15 @@ Build the library by :
 
 ## Documentation
 
-- DEPRECATED ```TagCommanderService.addContainer( id: string, uri : string, node : string )```
+- ```TagCommanderService.addContainer( id: string, uri : string, node : string ): Promise```
 
 	- id : id the id the script node will have
 	- uri : uri the source of the script
 	- node : the node on witch the script will be placed, it can either be head or body
 
-  It's not recommended to use this method because the container is loaded asynchronously without any way to know when it's done.
+  Return a promise which is resolved when the container has been loaded.
 
-- DEPRECATED ```TagCommanderService.removeContainer( id : string )```
+- ```TagCommanderService.removeContainer( id : string )```
 
 	- id : id the id the script node will have
 
