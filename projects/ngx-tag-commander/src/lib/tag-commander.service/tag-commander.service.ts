@@ -49,25 +49,28 @@ export class TagCommanderService {
   //  * @param {string} uri the source of the script
   //  * @param {string} node the node on witch the script will be placed, it can either be head or body
   // */
-  addContainer(id: string, uri: string, node: string): void {
-    this._tcContainers.push({ id: id, uri: uri });
-    let tagContainer = this._doc.createElement("script");
-    tagContainer.setAttribute("type", "text/javascript");
-    tagContainer.setAttribute("src", uri);
-    tagContainer.setAttribute("id", id);
-    if (typeof node !== "string") {
-      this.debug_logger(
-        "you didn't specify where you wanted to place the script, it will be placed in the head by default"
-      );
-      this._doc.querySelector("head").appendChild(tagContainer);
-    } else if (node.toLowerCase() === "head" || node.toLowerCase() === "body") {
-      this._doc.querySelector(node.toLowerCase()).appendChild(tagContainer);
-    } else {
-      this.debug_logger(
-        "you didn't correctily specify where you wanted to place the script, it will be placed in the head by default"
-      );
-      this._doc.querySelector("head").appendChild(tagContainer);
-    }
+  addContainer(id: string, uri: string, node: string ): Promise<void> {
+    return new Promise(resolve => {
+      this._tcContainers.push({ id: id, uri: uri });
+      let tagContainer = this._doc.createElement("script");
+      tagContainer.onload = () => resolve();
+      tagContainer.setAttribute("type", "text/javascript");
+      tagContainer.setAttribute("src", uri);
+      tagContainer.setAttribute("id", id);
+      if (typeof node !== "string") {
+        this.debug_logger(
+          "you didn't specify where you wanted to place the script, it will be placed in the head by default"
+        );
+        this._doc.querySelector("head").appendChild(tagContainer);
+      } else if (node.toLowerCase() === "head" || node.toLowerCase() === "body") {
+        this._doc.querySelector(node.toLowerCase()).appendChild(tagContainer);
+      } else {
+        this.debug_logger(
+          "you didn't correctily specify where you wanted to place the script, it will be placed in the head by default"
+        );
+        this._doc.querySelector("head").appendChild(tagContainer);
+      }
+    });
   }
 
   // /**
@@ -111,9 +114,7 @@ export class TagCommanderService {
   setTcVar(tcKey: string, tcVar: any) {
     if(isPlatformBrowser(this.platformId)){
       if (!this.winRef.nativeWindow.tc_vars) {
-        return setTimeout(() => {
-          this.setTcVar(tcKey, tcVar);
-        }, 1000);
+        throw new Error('[ngx-tag-commander] setTcVar failed because no window.tc_vars was found. Did you initialize it?')
       }
       this.winRef.nativeWindow.tc_vars[tcKey] = tcVar;
     }
@@ -121,14 +122,16 @@ export class TagCommanderService {
 
   // /**
   //  * set your varibles for the different providers, when called the first time it
-  //  * instantiate the external varible
+  //  * instantiate the external variable
   //  * @param {object} vars
   //  */
   setTcVars(vars: object): void {
-    this.debug_logger("setTcVars", vars);
-    let listOfVars = Object.keys(vars);
-    for (var i = 0; i < listOfVars.length; i++) {
-      this.setTcVar(listOfVars[i], vars[listOfVars[i]]);
+    if(isPlatformBrowser(this.platformId)){
+      this.debug_logger("setTcVars", vars);
+      let listOfVars = Object.keys(vars);
+      for (var i = 0; i < listOfVars.length; i++) {
+        this.setTcVar(listOfVars[i], vars[listOfVars[i]]);
+      }
     }
   }
 
@@ -137,10 +140,10 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  */
   getTcVar(tcKey: string): any {
-    this.debug_logger("getTcVars", tcKey);
     if(isPlatformBrowser(this.platformId)){
+    this.debug_logger("getTcVars", tcKey);
       if (this.winRef.nativeWindow.tc_vars[tcKey] === null){
-          throw new Error('tc_var is undefined. Check that it\'s properly initialized');
+          throw new Error('[ngx-tag-commander]tc_var is undefined. Check that it\'s properly initialized');
       }
       return this.winRef.nativeWindow.tc_vars[tcKey];
     }
@@ -151,8 +154,8 @@ export class TagCommanderService {
   //  * @param {string} varKey
   //  */
   removeTcVar(varKey: string): void {
-    this.debug_logger("removeTcVars", varKey);
     if(isPlatformBrowser(this.platformId)){
+    this.debug_logger("removeTcVars", varKey);
       delete this.winRef.nativeWindow.tc_vars[varKey];
     }
   }
@@ -162,13 +165,13 @@ export class TagCommanderService {
   //  * @param {object} options can contain some options in a form of an object
   //  */
   reloadAllContainers(options: object): number {
+    if(isPlatformBrowser(this.platformId)){
     this.debug_logger("reloadAllContainers", options);
     options = options || {};
     this.debug_logger(
       "Reload all containers ",
       typeof options === "object" ? "with options " + options : ""
     );
-    if(isPlatformBrowser(this.platformId)){
       
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
@@ -186,12 +189,12 @@ export class TagCommanderService {
   //  * @param {object} options can contain some options in a form of an object
   //  */
   reloadContainer(ids: string, idc: string, options: object): number {
+    if(isPlatformBrowser(this.platformId)){
     var options = options || {};
     this.debug_logger(
       "Reload container ids: " + ids + " idc: " + idc,
       typeof options === "object" ? "with options: " + options : ""
     );
-    if(isPlatformBrowser(this.platformId)){
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
           this.reloadContainer(ids, idc, options);
