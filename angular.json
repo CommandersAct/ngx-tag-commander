@@ -141,7 +141,7 @@
       "prefix": "enl",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/ngx-tag-commander/tsconfig.lib.json",
             "project": "projects/ngx-tag-commander/ng-package.json"

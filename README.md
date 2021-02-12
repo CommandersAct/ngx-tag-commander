@@ -33,7 +33,9 @@ You can install the module from a package manager of your choice directly from t
 npm i ngx-tag-commander
 ```
 
-### 3- In your application, declare dependency injection:
+
+### 3- In your application app.module.ts, declare dependency injection:
+
 
 ```typescript
 ...
