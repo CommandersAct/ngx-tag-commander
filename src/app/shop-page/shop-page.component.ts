@@ -5,10 +5,10 @@ import { TagCommanderService } from 'ngx-tag-commander';
 @Component({
   selector: 'app-shop-page',
   templateUrl: './shop-page.component.html',
-  styleUrls: ['./shop-page.component.scss']
+  styleUrls: ['./shop-page.component.scss'],
 })
 export class ShopPageComponent implements OnInit {
-  
+
   pageItem: Item = {
     id: '1',
     name: 'TagCommander',
@@ -23,19 +23,19 @@ export class ShopPageComponent implements OnInit {
       quantity: 2
     }
   ];
-  defaultEnv: string = 'AngularX';
-  defaultStoreCurrency: string = '€';
-  isMsgDisplayed: boolean = false;
+  defaultEnv = 'AngularX';
+  defaultStoreCurrency = '€';
+  isMsgDisplayed = false;
 
-  constructor(private tcService: TagCommanderService) { 
+  constructor(private tcService: TagCommanderService) {
       tcService.setTcVars({
-      env_template: "shop",
-      env_work: "dev",
-      env_language: "en",
-      user_id: "124",
-      user_logged: "true",
-      user_age: "32",
-      user_newcustomer: "false"
+      env_template: 'shop',
+      env_work: 'dev',
+      env_language: 'en',
+      user_id: '124',
+      user_logged: 'true',
+      user_age: '32',
+      user_newcustomer: 'false'
     });
    }
 
@@ -63,7 +63,7 @@ export class ShopPageComponent implements OnInit {
     });
 
     if (index === -1) {
-      let item = this.pageItem;
+      const item = this.pageItem;
       item['quantity'] = this.pageItem.quantity;
       this.cartItems.push(new Item(
         this.pageItem.id,
@@ -91,7 +91,7 @@ export class ShopPageComponent implements OnInit {
     this.cartItems[index].quantity += 1;
   }
   cartGrandTotal () {
-    let grandTotal:number = 0
+    let grandTotal = 0;
     this.cartItems.forEach((cartItem) => {
       grandTotal += cartItem.price * cartItem.quantity;
     });

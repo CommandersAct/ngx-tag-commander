@@ -7,9 +7,9 @@ import { TagCommanderService } from '../tag-commander.service/tag-commander.serv
   selector: '[tcEvent]'
 })
 export class TcEventDirective {
-  @Input('tcEvent') tcEvent:any;
-  @Input('tcEventLabel') tcEventLabel:any;
-  @Input('tcEventObj') tcEventObj:any;
+  @Input('tcEvent') tcEvent: any;
+  @Input('tcEventLabel') tcEventLabel: any;
+  @Input('tcEventObj') tcEventObj: any;
   constructor(private el: ElementRef, private tcService: TagCommanderService) {
   }
 
