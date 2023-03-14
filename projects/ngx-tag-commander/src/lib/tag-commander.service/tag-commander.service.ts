@@ -222,16 +222,14 @@ export class TagCommanderService {
     reloadCapture = false
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      if (reloadCapture === true) {
-        // clearTimeout(reloadFunction); TODO fix?
-      } else {
+      if (reloadCapture !== true) {
         this.debug_logger('captureEvent', eventLabel, element, data);
         if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
           if (eventLabel in this.winRef.nativeWindow.tC.event) {
             this.winRef.nativeWindow.tC.event[eventLabel](element, data);
           }
           if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
-            const reloadFunction = setTimeout(() => {
+            setTimeout(() => {
               this.captureEvent(
                 eventLabel,
                 element,

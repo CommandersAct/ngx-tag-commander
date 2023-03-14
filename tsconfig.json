@@ -19,10 +19,7 @@
     ],
     "paths": {
       "ngx-tag-commander": [
-        "dist/ngx-tag-commander"
-      ],
-      "ngx-tag-commander/*": [
-        "dist/ngx-tag-commander/*"
+        "projects/ngx-tag-commander/src/public_api.ts"
       ]
     },
     "useDefineForClassFields": false
