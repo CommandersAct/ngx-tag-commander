@@ -280,7 +280,7 @@ then go to [http://localhost:4200/](http://localhost:4200/)
 
 ## Development
 
-With Node 10
+With Node >= 14.20
 
 After forking, you will need to run the following from a command line to get your environment setup:
 
