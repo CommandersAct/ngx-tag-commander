@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
-import { DOCUMENT, isPlatformBrowser } from "@angular/common";
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 function _window(): any {
   return window;

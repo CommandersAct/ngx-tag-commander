@@ -26,7 +26,7 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          exclusions: ['datastorage', 'deduplication']
         }
       }]
     }
@@ -39,7 +39,7 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          exclusions: ['datastorage', 'deduplication']
         }
       }]
     }
@@ -52,7 +52,7 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          exclusions: ['datastorage', 'deduplication']
         }
       }]
     }
@@ -65,7 +65,7 @@ const appRoutes: Routes = [
         'idc':  12,
         'ids': 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"]
+          exclusions: ['datastorage', 'deduplication']
         }
       }]
     }
@@ -80,7 +80,7 @@ const appRoutes: Routes = [
     DashboardPageComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(appRoutes, {}),
     BrowserModule,
     AppRoutingModule,
     NgxTagCommanderModule
@@ -93,7 +93,7 @@ const appRoutes: Routes = [
 
 
 
-export class AppModule { 
+export class AppModule {
   constructor(tcService: TagCommanderService) {
     tcService.setDebug(true);
     tcService.trackRoutes(true);

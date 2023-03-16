@@ -51,7 +51,7 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
         ...
     ],
     providers: [WindowRef],
-    ..
+    ...
 })
 
 ```
@@ -60,18 +60,20 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
 
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
+
 ...
+
 export class AppModule {
-  constructor(tcService: TagCommanderService) {
-    ...
-    Promise.all([
-      tcService.addContainer('container_body', '/assets/tag-commander-body.js', 'body'),// Replace URL by the one of your container
-      tcService.addContainer('container_head', '/assets/tag-commander-head.js', 'head')
-    ]).then(() => {
-      //Insert the rest of your code here
-    })
-    ...
-  }
+    constructor(tcService: TagCommanderService) {
+        ...
+        Promise.all([
+            tcService.addContainer('container_body', '/assets/tag-commander-body.js', 'body'),// Replace URL by the one of your container
+            tcService.addContainer('container_head', '/assets/tag-commander-head.js', 'head')
+        ]).then(() => {
+            //Insert the rest of your code here
+        });
+        ...
+    }
 }
 ```
 
@@ -81,8 +83,9 @@ You are now ready to use the ngx-tag-commander plugin.
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
 ...
+
 export class MyComponent {
-constructor(private tcService: TagCommanderService) { }
+    constructor(private tcService: TagCommanderService) { }
 }
 ```
 
@@ -91,36 +94,36 @@ first configure the module to track routes in app.module
 
 ```typescript
 export class AppModule {
-  constructor(tcService: TagCommanderService) {
-    ...
-    tcService.trackRoutes(true);
-    ...
-  }
+    constructor(tcService: TagCommanderService) {
+        ...
+        tcService.trackRoutes(true);
+        ...
+    }
 }
 ```
 then in your routes:
 
 ```typescript
 const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full',
-    data: {
-      tcInclude: [{
-        'idc':  12,
-        'ids': 4056,
-        options: {
-          // Data Layer options if needed
+    {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full',
+        data: {
+            tcInclude: [{
+                'idc': 12,
+                'ids': 4056,
+                options: {
+                    // Data Layer options if needed
+                }
+            },
+                {
+                    'idc': 11,
+                    'ids': 4055,
+                }]
         }
-      },
-      {
-        'idc':  11,
-        'ids': 4055,
-      }]
-    }
-  },
- ];
+    },
+];
 ```
 This will reload the specified containers, with the specified options
 
@@ -130,19 +133,19 @@ The `setTcVars` call allows you to set your `tc_vars`.
 ```typescript
 constructor(private tcService: TagCommanderService) {
     tcService.setTcVars({
-    env_template : "shop",
-    env_work : "dev",
-    env_language : "en",
-    user_id : "124",
-    user_logged : "true",
-    user_age: "32",
-    user_newcustomer : "false",
+        env_template: 'shop',
+        env_work: 'dev',
+        env_language: 'en',
+        user_id: '124',
+        user_logged: 'true',
+        user_age: '32',
+        user_newcustomer: 'false',
     });
-  // you can also override some variable
+    // you can also override some variable
     if (isNewUser) {
-      tcService.setTcVars({
-      user_newcustomer : "true",
-      });
+        tcService.setTcVars({
+            user_newcustomer: 'true',
+        });
     }
     // or set/update them individually
     tcService.setTcVar('env_template', 'super_shop');
@@ -163,13 +166,13 @@ You can use the directive tcSetVars directly on any html node
 ```typescript
 import { WindowRef } from 'ngx-tag-commander';
 
-constructor(private tcService: TagCommanderService {
-	...
-	// retrieve container variables
-    tcService.getTcVar('your_var_key'));
+constructor(private tcService: TagCommanderService) {
+    ...
+    // retrieve container variables
+    tcService.getTcVar('your_var_key');
     // remove variable
-    tcService.removeTcVar('your_var_key')
-  }
+    tcService.removeTcVar('your_var_key');
+}
 ```
 
 
@@ -177,14 +180,14 @@ constructor(private tcService: TagCommanderService {
 ```typescript
 constructor(private tcService: TagCommanderService) {
     // {string} eventLabel the name of your event
-    let eventLabel=  'NameEvent';
+    let eventLabel = 'NameEvent';
     // {HTMLElement} element the HTMLelement on which the event is attached
     let element = 'button';
     // {object} data the data you want to transmit
-    let data = {"env_language": 'theEventVar'};
-  
-    tcService.captureEvent(eventLabel,element, data);
-   }
+    let data = {'env_language': 'theEventVar'};
+
+    tcService.captureEvent(eventLabel, element, data);
+}
 ```
 ### As a directive
 ```html
@@ -199,7 +202,7 @@ In your app.module.ts on one of your routes please write tcInclude inside the da
 var idc = '1234';
 var ids = '1234';
 var options = {
-    events: {page: [{},{}]},
+    events: {page: [{}, {}]},
     // ...
     // other options
     // ...
@@ -221,7 +224,7 @@ const appRoutes: Routes = [
     pathMatch: 'full',
     data: {
       tcInclude: [{
-        idc:  12,
+        idc: 12,
         ids: 4056,
         options: {
           // Data Layer options
@@ -234,10 +237,10 @@ const appRoutes: Routes = [
     component: IndexPageComponent,
     data: {
       tcInclude: [{
-        idc:  12,
+        idc: 12,
         ids: 4056,
         options: {
-			// Data Layer options
+          // Data Layer options
         }
       }]
     }
@@ -250,24 +253,23 @@ You can state an exclusion array to your options object like below :
 
 ```typescript
 tcInclude: [{
-	idc:  12,
-	ids: 4056,
-	options: {
-	    exclusions: [
-        "datastorage",
-        "deduplication",
-        "internalvars",
-        "privacy"
-    	]
-	}
-}]
-
+    idc: 12,
+    ids: 4056,
+    options: {
+        exclusions: [
+            'datastorage',
+            'deduplication',
+            'internalvars',
+            'privacy'
+        ]
+    }
+}];
 ```
 Please see Tag Commander documentation for other options
 
 
 ## Sample app
-To help you with your implementaiton we provided a sample application. to run it
+To help you with your implementation we provided a sample application. to run it
 ```
 ng serve
 or
@@ -278,23 +280,23 @@ then go to [http://localhost:4200/](http://localhost:4200/)
 
 ## Development
 
-With Node 10
+With Node >= 14.20
 
-After forking you will need to run the following from a command line to get your environment setup:
+After forking, you will need to run the following from a command line to get your environment setup:
 
-1. ```yarn install```
+1. ```npm install```
 
 After install you have the following commands available to you from a command line:
 
-Build the library by :
+(optional) build the library by :
 
  ```ng build NGX-TAG-COMMANDER ```
 
 ## Documentation
 
-- ```TagCommanderService.addContainer( id: string, uri : string, node : string ): Promise```
+- ```TagCommanderService.addContainer( id : string, uri : string, node : string ): Promise```
 
-	- id : id the id the script node will have
+	- id : id the script node will have
 	- uri : uri the source of the script
 	- node : the node on witch the script will be placed, it can either be head or body
 
@@ -302,7 +304,7 @@ Build the library by :
 
 - ```TagCommanderService.removeContainer( id : string )```
 
-	- id : id the id the script node will have
+  - id : id the script node will have
 
 
 - ```TagCommanderService.setDebug( debug : bool )```
@@ -312,7 +314,7 @@ Build the library by :
 
 - ```TagCommanderService.trackRoutes( b : bool )```
 
- - b : will read routes if set to true
+  - b : will read routes if set to true
 
 
 
@@ -355,7 +357,7 @@ Build the library by :
 	- idc : Container Id
 	- options : options for the function ```tC[containerId].reload(options)```
 
-- ```TagCommanderService .captureEvent( eventLabel : string , element : HTMLElement, data : object )```
+- ```TagCommanderService.captureEvent( eventLabel : string , element : HTMLElement, data : object )```
 
 	Set a TagCommander Event
 	- eventLabel : name of the event
