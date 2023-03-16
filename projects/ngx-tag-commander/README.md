@@ -177,6 +177,8 @@ constructor(private tcService: TagCommanderService) {
 
 
 ## Capture Events
+
+Trigger a custom event set in the container. For more information, check the [community documentation](https://community.commandersact.com/tagcommander/user-manual/container-management/events#3rd-method-integrating-custom-events-on-the-page-with-the-assistance-of-technical-staff)
 ```typescript
 constructor(private tcService: TagCommanderService) {
     // {string} eventLabel the name of your event
@@ -196,13 +198,13 @@ constructor(private tcService: TagCommanderService) {
 ```
 
 ## How to reload your container
-In your app.module.ts on one of your routes please write tcInclude inside the data part. You also need to state the event Page in the options.
+In your app.module.ts on one of your routes please write tcInclude inside the data part. Note that reloading won't trigger any tags. In order for tags to be fired, you will need add the events options with a custom trigger event that you have previously configured in your container. Each keys are the event's label and the value is an array of parameters in order.
 
 ```typescript
 var idc = '1234';
 var ids = '1234';
 var options = {
-    events: {page: [{}, {}]},
+    events: {page: [{}, {}]}, //custom trigger event page from the container. The array are the arguments, element and data
     // ...
     // other options
     // ...
@@ -220,14 +222,14 @@ you need to set tcService.trackRoutes(true); to true in your app configuration
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/home',m
     pathMatch: 'full',
     data: {
       tcInclude: [{
         idc: 12,
         ids: 4056,
         options: {
-          // Data Layer options
+          // This object is the parameter for container reload
         }
       }]
     }
@@ -240,7 +242,7 @@ const appRoutes: Routes = [
         idc: 12,
         ids: 4056,
         options: {
-          // Data Layer options
+          // This object is the parameter for container reload
         }
       }]
     }
