@@ -196,7 +196,7 @@ export class TagCommanderService {
       options = options || {};
       this.debug_logger(
         'Reload container ids: ' + siteId + ' idc: ' + containerId,
-        typeof options === 'object' ? 'with options: ' + options : ''
+        typeof options === 'object' ? 'with options: ' : '', options || ''
       );
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {

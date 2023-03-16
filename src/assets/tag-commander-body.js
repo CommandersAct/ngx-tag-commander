@@ -2,9 +2,9 @@
  * tagContainer Generator v82.0
  * Copyright Commanders Act
  * https://www.commandersact.com/fr/
- * Generated: 2023-03-15 15:18:39 Europe/Paris
+ * Generated: 2023-03-16 11:14:21 Europe/Paris
  * ---
- * Version	: 1.02
+ * Version	: 1.03
  * IDTC 	: 12
  * IDS		: 4056
  */
@@ -350,7 +350,7 @@ tC.extend({
     internalvars           : typeof tC.internalvars !== 'undefined' ? tC.internalvars : {},
     internalFunctions      : typeof tC.internalFunctions !== 'undefined' ? tC.internalFunctions : {},
     privacyVersion         : tC.privacyVersion || '',
-    containerVersion       : String(1.02),
+    containerVersion       : String(1.03),
     id_container           : String(12),
     id_site                : String(4056),
     generatorVersion       : '1.0.0',
@@ -367,7 +367,7 @@ window['tC_' + 4056 + '_' + 12] = {
     id_container           : String(12),
     id_site                : String(4056),
     frequency              : String(1000),
-    containerVersion       : String(1.02),
+    containerVersion       : String(1.03),
     generatorVersion       : '82.0'
 };
 
@@ -399,7 +399,7 @@ if (typeof tC.containersLaunched[4056] === 'undefined') {
     tC.containersLaunched[4056] = {};
 }
 
-tC.containersLaunched[4056][12] = {v:String(1.02), t:[], g:'82.0'};
+tC.containersLaunched[4056][12] = {v:String(1.03), t:[], g:'82.0'};
 
 /*extends*/
 
@@ -1431,6 +1431,22 @@ for(var i=0,x=tC.event.remove_from_cartListFunctions.length;i<x;i++){
 tC.event.remove_from_cartListFunctions[i](el, p);
 }
 };
+
+tC.event.pageListFunctions = tC.event.pageListFunctions || [];
+tC.event.pageListIdTags = tC.event.pageListIdTags || [];
+if (tC.event.pageListIdTags.indexOf("60")==-1){
+    tC.event.pageListIdTags.push("60");
+    tC.event.pageListFunctions.push(function(el, p){
+    
+        tC.executeTag60_4056_12(el, p);
+        tC.launchTag(60, 'Universal Analytics (builder)', 1731, 4056, 12, 20);});
+}
+tC.event.page=function(el, p){
+tc_array_events=tC.container_4056_12.init_tc_array_events(p);
+for(var i=0,x=tC.event.pageListFunctions.length;i<x;i++){
+tC.event.pageListFunctions[i](el, p);
+}
+};
 ;
 
 ;
@@ -1618,7 +1634,7 @@ tC.extend({
 
 window['tC' + 4056 + '_' + 12] = tC;
 
-window.postMessage('TC.EX.CONTAINER:{"id":' + 12 + ',"ids":' + 4056 + ',"v":"' + 1.02 + '","g":' + '82.0' + ',"p":'+tC.container_position+',"url":"'+(document.currentScript ? document.currentScript.src : '')+'"}','*');
+window.postMessage('TC.EX.CONTAINER:{"id":' + 12 + ',"ids":' + 4056 + ',"v":"' + 1.03 + '","g":' + '82.0' + ',"p":'+tC.container_position+',"url":"'+(document.currentScript ? document.currentScript.src : '')+'"}','*');
 
 tC.container_4056_12.datalayer();tC.array_launched_tags=[];tC.array_launched_tags_keys=[];
 
