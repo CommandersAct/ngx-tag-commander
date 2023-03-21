@@ -26,8 +26,8 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"],
-          events:{ page:[{},{}]},
+          exclusions: ['datastorage', 'deduplication'],
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -40,8 +40,8 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"],
-          events:{ page:[{},{}]},
+          exclusions: ['datastorage', 'deduplication'],
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -54,8 +54,8 @@ const appRoutes: Routes = [
         idc:  12,
         ids: 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"],
-          events:{ page:[{},{}]},
+          exclusions: ['datastorage', 'deduplication'],
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -68,8 +68,8 @@ const appRoutes: Routes = [
         'idc':  12,
         'ids': 4056,
         options: {
-          exclusions: ["datastorage", "deduplication"],
-          events:{ page:[{},{}]},
+          exclusions: ['datastorage', 'deduplication'],
+          events: { page: [{}, {}]},
         }
       }]
     }
