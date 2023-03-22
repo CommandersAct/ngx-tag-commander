@@ -1,6 +1,6 @@
 # ngx-tag-commander
 
-This service lets you integrate Tag Commander in your AngularX (12+) applications easily.
+This service lets you integrate CommandersAct's tag container in your AngularX (12+) applications easily.
 - [Official website](https://www.commandersact.com/fr/produits/tagcommander/)
 
 ## Features
@@ -61,7 +61,7 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
 
 ```
 
-### 4- add your Tag commander containers and start tracking:
+### 4- add your tag containers and start tracking:
 
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
@@ -227,7 +227,7 @@ you need to set tcService.trackRoutes(true); to true in your app configuration
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/home',m
+    redirectTo: '/home',
     pathMatch: 'full',
     data: {
       tcInclude: [{
@@ -272,14 +272,12 @@ tcInclude: [{
     }
 }];
 ```
-Please see Tag Commander documentation for other options
+Please see the [container's documentation](https://community.commandersact.com/tagcommander/) for other options
 
 
 ## Sample app
 To help you with your implementation we provided a sample application. to run it
 ```
-ng serve
-or
 npm start
 ```
 then go to [http://localhost:4200/](http://localhost:4200/)
@@ -297,7 +295,7 @@ After install you have the following commands available to you from a command li
 
 (optional) build the library by :
 
- ```ng build NGX-TAG-COMMANDER ```
+ ```npm run build```
 
 ## Documentation
 
