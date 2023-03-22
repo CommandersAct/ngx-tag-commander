@@ -1,6 +1,6 @@
 # ngx-tag-commander
 
-This service lets you integrate Tag Commander in your AngularX (2+) applications easily.
+This service lets you integrate Tag Commander in your AngularX (12+) applications easily.
 - [Official website](https://www.commandersact.com/fr/produits/tagcommander/)
 
 ## Features
@@ -10,6 +10,11 @@ This service lets you integrate Tag Commander in your AngularX (2+) applications
  - Reloading Containers
  - Event catching
  - Multiple containers
+
+## Angular Version Compatibility
+
+The library uses partial ivy builds to support projects with `angular >= 12`.
+For compatibility with `angular 7` please use `ngx-tag-commander@1.3.1`, in between versions might be working but are not explicitly built for.
 
 ## Installation and Quick Start
 The quick start is designed to give you a simple, working example for the most common usage scenario. There are numerous other ways to configure and use this library as explained in the documentation.

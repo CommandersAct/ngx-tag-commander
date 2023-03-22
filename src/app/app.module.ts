@@ -27,7 +27,7 @@ const appRoutes: Routes = [
         ids: 4056,
         options: {
           exclusions: ['datastorage', 'deduplication'],
-          events:{ page:[{},{}]},
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -41,7 +41,7 @@ const appRoutes: Routes = [
         ids: 4056,
         options: {
           exclusions: ['datastorage', 'deduplication'],
-          events:{ page:[{},{}]},
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -55,7 +55,7 @@ const appRoutes: Routes = [
         ids: 4056,
         options: {
           exclusions: ['datastorage', 'deduplication'],
-          events:{ page:[{},{}]},
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -69,7 +69,7 @@ const appRoutes: Routes = [
         'ids': 4056,
         options: {
           exclusions: ['datastorage', 'deduplication'],
-          events:{ page:[{},{}]},
+          events: { page: [{}, {}]},
         }
       }]
     }
@@ -84,7 +84,7 @@ const appRoutes: Routes = [
     DashboardPageComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes, {}),
+    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     BrowserModule,
     AppRoutingModule,
     NgxTagCommanderModule
