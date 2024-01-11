@@ -69,18 +69,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "NGX-TAG-COMMANDER-APP:build"
+            "buildTarget": "NGX-TAG-COMMANDER-APP:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "NGX-TAG-COMMANDER-APP:build:production"
+              "buildTarget": "NGX-TAG-COMMANDER-APP:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "NGX-TAG-COMMANDER-APP:build"
+            "buildTarget": "NGX-TAG-COMMANDER-APP:build"
           }
         },
         "test": {
@@ -177,6 +177,5 @@
         }
       }
     }
-  },
-  "defaultProject": "NGX-TAG-COMMANDER-APP"
+  }
 }

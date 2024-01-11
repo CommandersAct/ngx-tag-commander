@@ -32,7 +32,7 @@ npm i ngx-tag-commander
 <h3>2- In your application, declare dependency injection:</h3>
 
 <pre>
-<code class="keyword">@NgModule</code>({{'{'}}
+<code class="keyword">&#64;NgModule</code>({{'{'}}
     ...
     <code class="method">imports</code>: [
     ...
@@ -65,7 +65,7 @@ npm i ngx-tag-commander
 ...
 <code class="keyword">export class</code> <code class="class">MyComponent</code> {{ '{' }}
     <code class="keyword">constructor</code>(<code class="keyword">private</code> <code class="varible">tcService</code>: <code class="class">TagCommanderService</code>) {{ '{' }} {{ '}' }}
-}
+&#125;
 </pre>
 
 <h2>Declaring the route tracking</h2>
@@ -126,7 +126,7 @@ then in your routes:
     <code class="class">TagCommanderService</code>.<code class="method">setTcVars</code>({{ '{' }}
         <code class="varible">user_newcustomer</code> : <code class="string">"true"</code>,
     {{ '}' }});
-}
+&#125;
 <code class="comment">// or set/update them individualy</code>
 <code class="class">TagCommanderService</code>.<code class="method">setTcVar</code>(<code class="string">'env_template'</code>, <code class="string">'super_shop'</code>);
 

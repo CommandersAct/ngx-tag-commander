@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es5",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -21,9 +21,7 @@
       "ngx-tag-commander": [
         "projects/ngx-tag-commander/src/public_api.ts"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   },
-  "angularCompilerOptions": {
-    "enableIvy": true
-  }
 }
