@@ -12,9 +12,9 @@ This service lets you integrate CommandersAct's tag container in your AngularX (
  - Multiple containers
 
 ## Angular Version Compatibility
-
-The library uses partial ivy builds to support projects with `angular >= 12`.
-For compatibility with `angular 7` please use `ngx-tag-commander@1.3.1`, in between versions might be working but are not explicitly built for.
+- The current version of this service (`ngx-tag-commander@3.0.0`) works with projects using `angular >= 16`.
+- For projects with `angular 15`, `angular 14`, `angular 13` and `angular 12` please use `ngx-tag-commander@2.0.0`.
+- For compatibility with `angular 7` please use `ngx-tag-commander@1.3.1`, versions in-between `angular 12` and `angular 7` might be working but are not explicitly built for.
 
 ## Installation and Quick Start
 The quick start is designed to give you a simple, working example for the most common usage scenario. There are numerous other ways to configure and use this library as explained in the documentation.
