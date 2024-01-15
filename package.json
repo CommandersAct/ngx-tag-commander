@@ -1,12 +1,9 @@
 {
   "name": "ngx-tag-commander-app",
   "version": "1.0.0",
-  "author": "Mendoza Miguel, Lenoir Jérémie",
+  "author": "CommandersAct",
   "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TagCommander/ngx-tag-commander"
-  },
+  "repository": "https://github.com/CommandersAct/ngx-tag-commander",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
