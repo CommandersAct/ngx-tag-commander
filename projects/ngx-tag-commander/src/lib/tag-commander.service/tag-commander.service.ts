@@ -1,8 +1,8 @@
 // our root app component
-import { Router, ActivationEnd } from '@angular/router';
-import { WindowRef } from './WindowRef';
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import {Router, ActivationEnd} from '@angular/router';
+import {WindowRef} from './WindowRef';
+import {Injectable, Inject, PLATFORM_ID} from '@angular/core';
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 
 /** @dynamic */
 @Injectable({
@@ -50,7 +50,7 @@ export class TagCommanderService {
   // */
   addContainer(id: string, uri: string, node: string): Promise<void> {
     return new Promise((resolve) => {
-      this._tcContainers.push({ id: id, uri: uri });
+      this._tcContainers.push({id: id, uri: uri});
       const tagContainer = this._doc.createElement('script');
       tagContainer.onload = () => resolve();
       tagContainer.setAttribute('type', 'text/javascript');
@@ -83,10 +83,13 @@ export class TagCommanderService {
     const container = this._doc.getElementById(id);
     const containers = this._tcContainers.slice(0);
 
-    this._doc.querySelector('head').removeChild(container);
-
     for (let i = 0; i < containers.length; i++) {
       if (containers[i].id === id) {
+        const node = containers[i].node.toLowerCase();
+        const parent = this._doc.getElementsByTagName(node)[0];
+        if (parent && container && container.parentNode === parent) {
+          parent.removeChild(container);
+        }
         this._tcContainers.splice(i, 1);
       }
     }
@@ -125,7 +128,7 @@ export class TagCommanderService {
   }
 
   // /**
-  //  * set your varibles for the different providers, when called the first time it
+  //  * set your variables for the different providers, when called the first time it
   //  * instantiate the external variable
   //  * @param {object} vars
   //  */
@@ -145,8 +148,8 @@ export class TagCommanderService {
   //  */
   getTcVar(tcKey: string): any {
     if (isPlatformBrowser(this.platformId)) {
-      this.debug_logger('getTcVars', tcKey);
-      if (this.winRef.nativeWindow.tc_vars[tcKey] === null) {
+      this.debug_logger('getTcVar', tcKey);
+      if (this.winRef.nativeWindow.tc_vars[tcKey] === null || this.winRef.nativeWindow.tc_vars[tcKey] === undefined) {
         throw new Error(
           '[ngx-tag-commander]tc_var is undefined. Check that it\'s properly initialized'
         );
@@ -161,7 +164,7 @@ export class TagCommanderService {
   //  */
   removeTcVar(varKey: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.debug_logger('removeTcVars', varKey);
+      this.debug_logger('removeTcVar', varKey);
       delete this.winRef.nativeWindow.tc_vars[varKey];
     }
   }
