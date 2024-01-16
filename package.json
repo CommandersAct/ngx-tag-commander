@@ -8,10 +8,9 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build NGX-TAG-COMMANDER",
+    "test": "ng test NGX-TAG-COMMANDER",
     "test-sample-app": "ng test",
-    "test-wrapper": "ng test NGX-TAG-COMMANDER",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -55,6 +54,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
     "ng-packagr": "^17.0.3",
+    "puppeteer": "^21.7.0",
     "ts-node": "~10.9.2",
     "typescript": "~5.2.2"
   }
