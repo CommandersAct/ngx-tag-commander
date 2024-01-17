@@ -44,9 +44,9 @@ export class TagCommanderService {
 
   // /**
   //  * the script URI correspond to the tag-commander script URL, it can either be a CDN URL or the path of your script
-  //  * @param {string} id the id the script node will have
-  //  * @param {string} uri the source of the script
-  //  * @param {string} node the node on witch the script will be placed, it can either be head or body
+  //  * @param {string} id: the id the script node will have
+  //  * @param {string} uri: the source of the script
+  //  * @param {string} node: the node on witch the script will be placed, it can either be head or body
   // */
   addContainer(id: string, uri: string, node: string): Promise<void> {
     return new Promise((resolve) => {
@@ -97,7 +97,7 @@ export class TagCommanderService {
 
   // /**
   //  * will display the debug messages if true
-  //  * @param {boolean} debug if set to true it will activate the debug msg default is false
+  //  * @param {boolean} debug: if set to true it will activate the debug msg default is false
   //  */
   setDebug(debug: boolean): void {
     this.debug = debug;
@@ -105,7 +105,7 @@ export class TagCommanderService {
 
   // /**
   //  * allows the router to be tracked
-  //  * @param {boolean} b will read routes if set to true
+  //  * @param {boolean} b: will read routes if set to true
   //  */
   trackRoutes(b: boolean): void {
     this._trackRoutes = !!b;
@@ -171,7 +171,7 @@ export class TagCommanderService {
 
   // /**
   //  * will reload all the containers
-  //  * @param {object} options can contain some options in a form of an object
+  //  * @param {object} options: can contain some options in a form of an object
   //  */
   reloadAllContainers(options: object = {}): number {
     if (isPlatformBrowser(this.platformId)) {
@@ -192,7 +192,7 @@ export class TagCommanderService {
   //  * will reload the specified container
   //  * @param {number} siteId
   //  * @param {number} idc
-  //  * @param {object} options can contain some options in a form of an object
+  //  * @param {object} options: can contain some options in a form of an object
   //  */
   reloadContainer(siteId: string, containerId: string, options: object): number {
     if (isPlatformBrowser(this.platformId)) {
@@ -214,9 +214,9 @@ export class TagCommanderService {
 
   // /**
   //  * will set an TagCommander event
-  //  * @param {string} eventLabel the name of your event
-  //  * @param {HTMLElement} element the HTMLelement on witch the event is attached
-  //  * @param {object} data the data you want to transmit
+  //  * @param {string} eventLabel: the name of your event
+  //  * @param {HTMLElement} element: the HTMLElement on witch the event is attached
+  //  * @param {object} data: the data you want to transmit
   //  */
   captureEvent(
     eventLabel: string,
