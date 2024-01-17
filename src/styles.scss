@@ -161,6 +161,7 @@ $tag-commander-purple: #ed2186;
 /* main */
 
 html > body {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
     background-color: #f0f0f0;
     height: initial;
     margin: 0;
@@ -247,7 +248,7 @@ pre {
         color: $amber-500;
     }
     code.class {
-        color: $light-blue-500;   
+        color: $light-blue-500;
     }
 }
 
