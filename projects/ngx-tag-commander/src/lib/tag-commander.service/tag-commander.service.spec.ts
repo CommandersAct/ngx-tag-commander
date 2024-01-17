@@ -2,6 +2,8 @@ import {TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {TagCommanderService} from 'ngx-tag-commander';
 import {WindowRef} from './WindowRef';
+import {Router, Routes} from '@angular/router';
+import {Component} from '@angular/core';
 
 class MockWindowRef {
   nativeWindow = {tc_vars: {}};
@@ -11,23 +13,49 @@ class MockWindowRefNoTcVars {
   nativeWindow = {};
 }
 
+@Component({
+  template: ''
+})
+class DummyRouteComponent {
+}
+
+const testRoutes: Routes = [
+  {path: 'test', component: DummyRouteComponent, data: {tcInclude: [{ids: 'someSiteId', idc: 'someContainerId', options: {}}]}}
+];
+
 describe('TagCommanderService', () => {
   let service: TagCommanderService;
   let windowRef: WindowRef;
+  let router: Router;
 
   describe('', () => {
+
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
+        imports: [RouterTestingModule.withRoutes(testRoutes)],
         providers: [
           TagCommanderService,
           {provide: WindowRef, useClass: MockWindowRef}
         ]
       });
+
       service = TestBed.inject(TagCommanderService);
       windowRef = TestBed.inject(WindowRef);
+      router = TestBed.inject(Router);
 
+      service.trackRoutes(true);
       service.debug_logger(true);
+    });
+
+    it('should reload container on route change', async () => {
+      // Create Spy
+      spyOn(service, 'reloadContainer').and.callThrough();
+
+      // Trigger Route change
+      await router.navigate(['/test']);
+
+      // Assertions
+      expect(service.reloadContainer).toHaveBeenCalledWith('someSiteId', 'someContainerId', {});
     });
 
     it('addContainer() should add a container to the DOM into the specified node', async () => {
