@@ -10,7 +10,9 @@
     "build": "ng build NGX-TAG-COMMANDER",
     "test": "ng test NGX-TAG-COMMANDER",
     "test-sample-app": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "postinstall": "shx cp ./README.md src/assets/Documentation.md",
+    "postbuild": "shx cp ./README.md dist/ngx-tag-commander/README.md"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +25,8 @@
     "@angular/platform-browser-dynamic": "^17.0.9",
     "@angular/router": "^17.0.9",
     "core-js": "^2.5.7",
+    "ngx-markdown": "^17.1.1",
+    "prismjs": "^1.29.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.1.0",
     "zone.js": "~0.14.3"
@@ -55,6 +59,7 @@
     "karma-jasmine-html-reporter": "^2.1.0",
     "ng-packagr": "^17.0.3",
     "puppeteer": "^21.7.0",
+    "shx": "^0.3.4",
     "ts-node": "~10.9.2",
     "typescript": "~5.2.2"
   }

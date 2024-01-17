@@ -1,7 +1,7 @@
 # ngx-tag-commander
 
 This service lets you integrate CommandersAct's tag container in your AngularX (12+) applications easily.
-- [Official website](https://www.commandersact.com/fr/produits/tagcommander/)
+- [Official website](https://www.commandersact.com/products/tag-management/)
 
 ## Features
 
@@ -19,7 +19,7 @@ This service lets you integrate CommandersAct's tag container in your AngularX (
 ## Installation and Quick Start
 The quick start is designed to give you a simple, working example for the most common usage scenario. There are numerous other ways to configure and use this library as explained in the documentation.
 
-### 1- Before installing the plugin
+### 1. Before installing the plugin
 
 The plugin doesn't replace the standard setup of a container because you may need to use the containers outside of the plugin.
 
@@ -28,8 +28,8 @@ Initialize your datalayer so that it's ready for the container and plugin, witho
 ```
 tc_vars = []
 ```
-### 2- Installation:
 
+### 2. Installation:
 
 You can install the module from a package manager of your choice directly from the command line
 
@@ -39,8 +39,7 @@ npm i ngx-tag-commander
 ```
 
 
-### 3- In your application app.module.ts, declare dependency injection:
-
+### 3. In your application app.module.ts, declare dependency injection:
 
 ```typescript
 ...
@@ -61,7 +60,7 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
 
 ```
 
-### 4- add your tag containers and start tracking:
+### 4. add your tag containers and start tracking:
 
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
