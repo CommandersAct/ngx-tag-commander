@@ -116,7 +116,7 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  * @param {*} tcVar
   //  */
-  setTcVar(tcKey: string, tcVar: any) {
+  setTcVar(tcKey: string, tcVar: any): void {
     if (isPlatformBrowser(this.platformId)) {
       if (!this.winRef.nativeWindow.tc_vars) {
         throw new Error(

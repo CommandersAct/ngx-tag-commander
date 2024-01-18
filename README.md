@@ -1,9 +1,24 @@
 # ngx-tag-commander
 
-This service lets you integrate CommandersAct's tag container in your AngularX (12+) applications easily.
-- [Official website](https://www.commandersact.com/products/tag-management/)
+This service lets you integrate CommandersAct's tag container in your Angular applications easily.
+- [Official CommandersAct's tag container website](https://www.commandersact.com/products/tag-management/)
 
-## Features
+## Table of Contents
+- [Features](#features)
+- [Angular Version Compatibility](#angular-version-compatibility)
+- [Installation and Quick Start](#installation-and-quick-start)
+- [Methods](#methods)
+  - [Usage in component](#usage) 
+  - [Container Management](#container-management)
+  - [Variable Management](#variable-management)
+  - [Events](#events)
+  - [Reloading Containers](#reloading-containers)
+- [API Documentation](#api-documentation)
+- [Sample App](#sample-app)
+- [Development](#development)
+- [License](#license)
+
+## Features <a name="features"></a>
 
  - Automatic page tracking
  - Set & Get Variables
@@ -11,21 +26,37 @@ This service lets you integrate CommandersAct's tag container in your AngularX (
  - Event catching
  - Multiple containers
 
-## Angular Version Compatibility
-- The current version of this service (`ngx-tag-commander@3.0.0`) works with projects using `angular >= 16`.
-- For projects with `angular 15`, `angular 14`, `angular 13` and `angular 12` please use `ngx-tag-commander@2.0.0`.
-- For compatibility with `angular 7` please use `ngx-tag-commander@1.3.1`, versions in-between `angular 12` and `angular 7` might be working but are not explicitly built for.
+## Angular Version Compatibility <a name="angular-version-compatibility"></a>
+The following table gives an overview of which version of `ngx-tag-commander` to use depending on your project's Angular version.
+- ✅: supported
+- ⚠️: not explicitly built for but might be working
+- ❌: not supported
 
-## Installation and Quick Start
+| Angular version | `ngx-tag-commander@3.0.0` (current) | `ngx-tag-commander@2.0.0` | `ngx-tag-commander@1.3.1` |
+|---------------------| ---- | ---- | ---- |
+| 17.x.x              | ✅ | ⚠️ | ❌ |
+| 16.x.x              | ✅ | ⚠️ | ❌ |
+| 15.x.x              | ❌ | ✅ | ❌ |
+| 14.x.x              | ❌ | ✅ | ❌ |
+| 13.x.x              | ❌ | ✅ | ❌ |
+| 12.x.x              | ❌ | ✅ | ❌ |
+| 11.x.x              | ❌ | ❌ | ⚠️ |
+| 10.x.x              | ❌ | ❌ | ⚠️ |
+| 9.x.x               | ❌ | ❌ | ⚠️ |
+| 8.x.x               | ❌ | ❌ | ⚠️ |
+| 7.x.x               | ❌ | ❌ | ✅ |
+
+## Installation and Quick Start <a name="installation-and-quick-start"></a>
+
 The quick start is designed to give you a simple, working example for the most common usage scenario. There are numerous other ways to configure and use this library as explained in the documentation.
 
 ### 1. Before installing the plugin
 
-The plugin doesn't replace the standard setup of a container because you may need to use the containers outside of the plugin.
+The plugin doesn't replace the standard setup of a container because you may need to use the containers outside the plugin.
 
 Initialize your datalayer so that it's ready for the container and plugin, without losing any data. Do it as soon as possible on your website like in a `<script>` block in the head of your webapp.
 
-```
+```javascript
 tc_vars = []
 ```
 
@@ -33,11 +64,9 @@ tc_vars = []
 
 You can install the module from a package manager of your choice directly from the command line
 
-```
-# NPM
+```sh
 npm i ngx-tag-commander
 ```
-
 
 ### 3. In your application app.module.ts, declare dependency injection:
 
@@ -57,14 +86,12 @@ import { NgxTagCommanderModule } from 'ngx-tag-commander';
     providers: [WindowRef],
     ...
 })
-
 ```
 
-### 4. add your tag containers and start tracking:
+### 4. Add your tag containers and start tracking:
 
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
-
 ...
 
 export class AppModule {
@@ -83,145 +110,86 @@ export class AppModule {
 
 You are now ready to use the ngx-tag-commander plugin.
 
-## Declaring TagCommander in your Controller
+## Methods <a name="methods"></a>
+
+Some methods are asynchronous. If you want to ensure that a method has been executed before continuing, you can use the await keyword. Please check the function definition to see if it is asynchronous.
+
+### Usage in component <a name="usage"></a>
+
 ```typescript
 import { TagCommanderService } from 'ngx-tag-commander';
 ...
 
 export class MyComponent {
-    constructor(private tcService: TagCommanderService) { }
-}
-```
-
-## Declaring the route tracking
-first configure the module to track routes in app.module
-
-```typescript
-export class AppModule {
-    constructor(tcService: TagCommanderService) {
-        ...
-        tcService.trackRoutes(true);
-        ...
+    constructor(private tcService: TagCommanderService) {
+      ...
     }
 }
 ```
-then in your routes:
+
+### Container Management <a name="container-management"></a>
 
 ```typescript
-const appRoutes: Routes = [
-    {
-        path: '',
-        redirectTo: '/home',
-        pathMatch: 'full',
-        data: {
-            tcInclude: [{
-                'idc': 12,
-                'ids': 4056,
-                options: {
-                    // Data Layer options if needed
-                }
-            },
-                {
-                    'idc': 11,
-                    'ids': 4055,
-                }]
-        }
-    },
-];
-```
-This will reload the specified containers, with the specified options
+// Adding a container
+await tcService.addContainer('my-custom-id', '/url/to/container.js', 'head');
 
-## Set Vars
-The `setTcVars` call allows you to set your `tc_vars`.
+// Removing a container
+tcService.removeContainer('my-custom-id');
+```
+
+### Variable Management <a name="variable-management"></a>
 
 ```typescript
-constructor(private tcService: TagCommanderService) {
-    tcService.setTcVars({
-        env_template: 'shop',
-        env_work: 'dev',
-        env_language: 'en',
-        user_id: '124',
-        user_logged: 'true',
-        user_age: '32',
-        user_newcustomer: 'false',
-    });
-    // you can also override some variable
-    if (isNewUser) {
-        tcService.setTcVars({
-            user_newcustomer: 'true',
-        });
-    }
-    // or set/update them individually
-    tcService.setTcVar('env_template', 'super_shop');
-}
-```
-### As a directive
-You can use the directive tcSetVars directly on any html node
+// Set variables
+tcService.setTcVars({ env_template : "shop", env_work: 'dev', ... });
 
+// Update a single variable, you can also overwrite existing variables
+tcService.setTcVar('env_template', 'super_shop');
+
+// Get a variable
+const myVar = wrapper.getTcVar('env_template');
+
+// Remove a variable
+tcService.removeTcVar('env_template');
+```
+
+#### Set variables using `SetTcVarsDirective`
+You can also use the directive `SetTcVarsDirective` to set variables directly on any html node:
 ```html
-<html-element class="sm-button green-500" [tcSetVars]="{'env_language': 'fr'}"></html-element>
-
-<!-- other exemple -->
-<!-- defaultLanguage being an attribut of your component -->
-<div class="sm-button green-500" [tcSetVars]="{'env_template': defaultEnv}"></div>
+<div [tcSetVars]="{ env_template: defaultEnv }"></div>
 ```
-## Retrieve or Delete Variables
 
+### Events <a name="events"></a>
+
+- Refer to the [base documentation on events](https://community.commandersact.com/tagcommander/user-manual/container-management/events) for an understanding of events in general.
 ```typescript
-import { WindowRef } from 'ngx-tag-commander';
-
-constructor(private tcService: TagCommanderService) {
-    ...
-    // retrieve container variables
-    tcService.getTcVar('your_var_key');
-    // remove variable
-    tcService.removeTcVar('your_var_key');
-}
+// Triggering an event
+// eventLabel: Name of the event as defined in the container
+// htmlElement: Calling context. Usually the HTML element on which the event is triggered, but it can be the component.
+// data: event variables
+tcService.captureEvent(eventLabel, element, data);
 ```
-
-
-## Capture Events
-
-Trigger a custom event set in the container. For more information, check the [community documentation](https://community.commandersact.com/tagcommander/user-manual/container-management/events#3rd-method-integrating-custom-events-on-the-page-with-the-assistance-of-technical-staff)
-```typescript
-constructor(private tcService: TagCommanderService) {
-    // {string} eventLabel the name of your event
-    let eventLabel = 'NameEvent';
-    // {HTMLElement} element the HTMLelement on which the event is attached
-    let element = 'button';
-    // {object} data the data you want to transmit
-    let data = {'env_language': 'theEventVar'};
-
-    tcService.captureEvent(eventLabel, element, data);
-}
-```
-### As a directive
+#### Trigger an event using `TcEventDirective`
+- Events can also be triggered by using the `TcEventDirective`. The event will be triggered when clicking the button.
 ```html
-<button [tcEvent]="'test'" [tcEventLabel]="'test'" [tcEventObj]="cartItems"> Add Items in ShopCart </button>
-
+<button [tcEvent]="'test'" [tcEventLabel]="'test'" [tcEventObj]="cartItems">Add Items in ShopCart</button>
 ```
 
-## How to reload your container
-In your app.module.ts on one of your routes please write tcInclude inside the data part. Note that reloading won't trigger any tags. In order for tags to be fired, you will need add the events options with a custom trigger event that you have previously configured in your container. Each keys are the event's label and the value is an array of parameters in order.
+### Reloading Containers <a name="reloading-containers"></a>
 
+#### 1 Manual Reload
+Update your container after any variable change.
 ```typescript
-var idc = '1234';
-var ids = '1234';
-var options = {
-    events: {page: [{}, {}]}, //custom trigger event page from the container. The array are the arguments, element and data
-    // ...
-    // other options
-    // ...
-};
-this.tcService.reloadContainer(ids, idc, options);
-// or you can reload all the containers
-this.tcService.reloadAllContainers(options);
+tcService.reloadContainer(sideId, containerId, options);
 ```
-## Automatic reload of your containers by tracking Routes
-### The configuration
 
-you need to set tcService.trackRoutes(true); to true in your app configuration
-
+#### 2. On Route Change
+Automatic reload can be performed on route change.
+1. Enable the service's route tracking in the app configuration:
+```typescript
+tcService.trackRoutes(true);
+```
+2. Add the `tcInclude` property to your routes:
 ```typescript
 const appRoutes: Routes = [
   {
@@ -232,9 +200,7 @@ const appRoutes: Routes = [
       tcInclude: [{
         idc: 12,
         ids: 4056,
-        options: {
-          // This object is the parameter for container reload
-        }
+        options: {...}
       }]
     }
   },
@@ -245,17 +211,15 @@ const appRoutes: Routes = [
       tcInclude: [{
         idc: 12,
         ids: 4056,
-        options: {
-          // This object is the parameter for container reload
-        }
+        options: {...}
       }]
     }
   }
 ];
 ```
-### Exclusions
+#### Exclusions //TODO check if still relevant
 
-You can state an exclusion array to your options object like below :
+You can state an exclusion array to your options object like below:
 
 ```typescript
 tcInclude: [{
@@ -271,106 +235,62 @@ tcInclude: [{
     }
 }];
 ```
-Please see the [container's documentation](https://community.commandersact.com/tagcommander/) for other options
+Please see the [container's documentation](https://community.commandersact.com/tagcommander/) for other options.
 
+## API Documentation <a name="api-documentation"></a>
 
-## Sample app
-To help you with your implementation we provided a sample application. to run it
-```
-npm start
-```
-then go to [http://localhost:4200/](http://localhost:4200/)
+- ```TagCommanderService.addContainer(id: string, uri: string, node: string): Promise<void>```
+  - `id`: The id the script node will have
+  - `uri`: The source of the script
+  - `node`: The node on witch the script will be placed. Can either be `head` or `body`
+  - Returns a promise which is resolved when the container has been loaded.
+- ```TagCommanderService.removeContainer(id: string): void```
+  - `id`: The id of the container to remove
+- ```TagCommanderService.setDebug(debug: boolean): void```
+  - `debug`: TagCommanderService will display debug messages if set to `true`
+- ```TagCommanderService.trackRoutes(b : boolean): void```
+  - `b`: TagCommanderService will reload containers on route change if set to `true`
+- ```TagCommanderService.setTcVar(tcKey: string, tcVar: any): void```
+  - `tcKey`: Key of the variable to set or update
+  - `tcVar`: Data of the variable
+- ```TagCommanderService.setTcVars(vars: object): void```
+  - `vars`: Object containing the multiple variables to set or update
+- ```TagCommanderService.getTcVar(tcKey: string): any```
+  - `tcKey`: Key of the variable to get
+- ```TagCommanderService.removeTcVar(varKey: string): void```
+  - `varKey`: Key of the variable to remove
+- ```TagCommanderService.reloadAllContainers(options: object): number```
+  - `options`: Options passed to ```tC.container.reload(options)```
+- ```TagCommanderServicereloadContainer(siteId: string, containerId: string, options: object): number```
+  - `siteId`: Site id
+  - `containerId` : Container Id
+  - `options`: Options passed to```tC[containerId].reload(options)```
+- ```TagCommanderService.captureEvent(eventLabel: string, element: HTMLElement, data: object)```
+  - `eventLabel`: Name of the event
+  - `element`: DOM element where the event is attached
+  - `data`: Data sent with the event
 
-
-## Development
-
-With Node >= 14.20
-
-After forking, you will need to run the following from a command line to get your environment setup:
-
+## Sample app <a name="sample-app"></a>
+To help you with your implementation we provided a sample application. To run it clone the repo and ensure you have Node.js >=18.x.x installed. Then run in the base folder:
 1. ```npm install```
+2. ```npm start```
 
-After install you have the following commands available to you from a command line:
-
-(optional) build the library by :
-
- ```npm run build```
-
-## Documentation
-
-- ```TagCommanderService.addContainer( id : string, uri : string, node : string ): Promise```
-
-	- id : id the script node will have
-	- uri : uri the source of the script
-	- node : the node on witch the script will be placed, it can either be head or body
-
-  Return a promise which is resolved when the container has been loaded.
-
-- ```TagCommanderService.removeContainer( id : string )```
-
-  - id : id the script node will have
+After that, visit [http://localhost:4200/](http://localhost:4200/).
 
 
-- ```TagCommanderService.setDebug( debug : bool )```
+## Development <a name="development"></a>
 
-	- debug : will display the debug messages if true
+The implementation of the `ngx-tag-commander` library can be found in `/projects/ngx-tag-commander`. Changes can be tested using the sample app described above.
 
+Useful commands (ensure you have Node.js >=18.x.x installed & run in the base folder):
+- Setup development environment: ```npm install```
+- Run sample app: ```npm start```
+- Run linter: ```npm run lint```
+- Run library tests: ```npm run test```
+- Run sample app tests: ```npm run test-sample-app```
+- Build library: ```npm run build```
 
-- ```TagCommanderService.trackRoutes( b : bool )```
-
-  - b : will read routes if set to true
-
-
-
-- ```TagCommanderService.setTcVar( tcKey : string, tcVar : any )```
-
-	set or update the value of the var
-
-	- tcKey : key in the data layer
-	- tcVar : content
-
-
-- ```TagCommanderService.setTcVars( vars : any )```
-
-	set your variables for the different providers, when called the first time it instantiate the external variable
-
-- ```TagCommanderService.getTcVar( tcKey : string )```
-
-	get the value of the container variable
-	
-	- tcKey : key 
-
-
-- ```TagCommanderService.removeTcVar( varKey : string )```
-
-	removes the var by specifying the key
-	
-	- varKey : key of the variable
-
-
-- ```TagCommanderService.reloadAllContainers( options : object )```
-
-	Reload all containers
-
-	- options to give to the ```tC.container.reload(options)``` function
-
-- ```TagCommanderService.reloadContainer( ids : number, idc : number, options : object )```
-
-	Reload the specified container
-	- ids : Site Id
-	- idc : Container Id
-	- options : options for the function ```tC[containerId].reload(options)```
-
-- ```TagCommanderService.captureEvent( eventLabel : string , element : HTMLElement, data : object )```
-
-	Set a TagCommander Event
-	- eventLabel : name of the event
-	- element : Dom Element where the event is attached
-	- data : data you want to send
-
-
-## License
-
-As AngularJS itself, this module is released under the permissive [MIT License](http://revolunet.mit-license.org). Your contributions are always welcome.
+## License <a name="license"></a>
+As Angular itself, this module is released under the permissive [MIT License](http://revolunet.mit-license.org). Your contributions are always welcome.
 
 
