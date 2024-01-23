@@ -295,6 +295,10 @@ Useful commands (ensure you have Node.js >=18.x.x installed & run in the base fo
 - Run sample app tests: ```npm run test-sample-app```
 - Build library: ```npm run build```
 
+# Contribute <a name="contribute"></a>
+
+To contribute to this project, please read the [CONTRIBUTE.md](CONTRIBUTE.md) file.
+
 ## License <a name="license"></a>
 As Angular itself, this module is released under the permissive [MIT License](http://revolunet.mit-license.org). Your contributions are always welcome.
 
