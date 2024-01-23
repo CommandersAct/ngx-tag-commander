@@ -13,6 +13,7 @@ This service lets you integrate CommandersAct's tag container in your Angular ap
   - [Variable Management](#variable-management)
   - [Events](#events)
   - [Reloading Containers](#reloading-containers)
+- [Server-side Rendering (SSR)](#server-side-rendering)
 - [API Documentation](#api-documentation)
 - [Sample App](#sample-app)
 - [Development](#development)
@@ -34,17 +35,17 @@ The following table gives an overview of which version of `ngx-tag-commander` to
 
 | Angular version | `ngx-tag-commander@3.0.0` (current) | `ngx-tag-commander@2.0.0` | `ngx-tag-commander@1.3.1` |
 |---------------------| ---- | ---- | ---- |
-| 17.x.x              | ✅ | ⚠️ | ❌ |
-| 16.x.x              | ✅ | ⚠️ | ❌ |
-| 15.x.x              | ❌ | ✅ | ❌ |
-| 14.x.x              | ❌ | ✅ | ❌ |
-| 13.x.x              | ❌ | ✅ | ❌ |
-| 12.x.x              | ❌ | ✅ | ❌ |
-| 11.x.x              | ❌ | ❌ | ⚠️ |
-| 10.x.x              | ❌ | ❌ | ⚠️ |
-| 9.x.x               | ❌ | ❌ | ⚠️ |
-| 8.x.x               | ❌ | ❌ | ⚠️ |
-| 7.x.x               | ❌ | ❌ | ✅ |
+| `17.x.x`              | ✅ | ⚠️ | ❌ |
+| `16.x.x`              | ✅ | ⚠️ | ❌ |
+| `15.x.x`              | ❌ | ✅ | ❌ |
+| `14.x.x `             | ❌ | ✅ | ❌ |
+| `13.x.x`              | ❌ | ✅ | ❌ |
+| `12.x.x`              | ❌ | ✅ | ❌ |
+| `11.x.x`              | ❌ | ❌ | ⚠️ |
+| `10.x.x`              | ❌ | ❌ | ⚠️ |
+| `9.x.x`               | ❌ | ❌ | ⚠️ |
+| `8.x.x`               | ❌ | ❌ | ⚠️ |
+| `7.x.x `              | ❌ | ❌ | ✅ |
 
 ## Installation and Quick Start <a name="installation-and-quick-start"></a>
 
@@ -236,6 +237,10 @@ tcInclude: [{
 }];
 ```
 Please see the [container's documentation](https://community.commandersact.com/tagcommander/) for other options.
+
+## Server-side Rendering (SSR) <a name="server-side-rendering"></a>
+`ngx-tag-commander` fully supports Server-side rendering (SSR), as it comes with an internal check to run the code only on the client-side.
+This is important as the wrapper is interacting with the DOM objects `document` and `window`, which are not available on the server.
 
 ## API Documentation <a name="api-documentation"></a>
 
