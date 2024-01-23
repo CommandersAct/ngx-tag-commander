@@ -197,15 +197,15 @@ export class TagCommanderService {
   reloadContainer(siteId: string, containerId: string, options: object): number {
     if (isPlatformBrowser(this.platformId)) {
       options = options || {};
-      this.debug_logger(
-        'Reload container ids: ' + siteId + ' idc: ' + containerId,
-        typeof options === 'object' ? 'with options: ' : '', options || ''
-      );
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
           this.reloadContainer(siteId, containerId, options);
         }, 1000);
       }
+      this.debug_logger(
+        'Reload container ids: ' + siteId + ' idc: ' + containerId,
+        typeof options === 'object' ? 'with options: ' : '', options || ''
+      );
       this.winRef.nativeWindow.tC['container_' + siteId + '_' + containerId].reload(
         options
       );
