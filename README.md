@@ -1,7 +1,8 @@
 # ngx-tag-commander
 
 This service lets you integrate CommandersAct's tag container in your Angular applications easily.
-- [Official CommandersAct's tag container website](https://www.commandersact.com/products/tag-management/)
+- **Note**: Familiarize yourself with [CommandersAct's tag container's primary documentation](https://doc.commandersact.com/features/sources/sources-catalog/web/containers) before proceeding.
+
 
 ## Table of Contents
 - [Features](#features)
@@ -162,7 +163,7 @@ You can also use the directive `SetTcVarsDirective` to set variables directly on
 
 ### Events <a name="events"></a>
 
-- Refer to the [base documentation on events](https://community.commandersact.com/tagcommander/user-manual/container-management/events) for an understanding of events in general.
+- Refer to the [base documentation on events](https://doc.commandersact.com/features/sources/sources-catalog/web/containers/user-guides-for-browser-side-platform/tags/rules/triggers) for an understanding of events in general.
 ```typescript
 // Triggering an event
 // eventLabel: Name of the event as defined in the container
@@ -236,7 +237,7 @@ tcInclude: [{
     }
 }];
 ```
-Please see the [container's documentation](https://community.commandersact.com/tagcommander/) for other options.
+Please see the [container's documentation](https://doc.commandersact.com/features/sources/sources-catalog/web/containers) for other options.
 
 ## Server-side Rendering (SSR) <a name="server-side-rendering"></a>
 `ngx-tag-commander` fully supports Server-side rendering (SSR), as it comes with an internal check to run the code only on the client-side.
