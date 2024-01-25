@@ -168,7 +168,7 @@ You can also use the directive `SetTcVarsDirective` to set variables directly on
 // eventLabel: Name of the event as defined in the container
 // htmlElement: Calling context. Usually the HTML element on which the event is triggered, but it can be the component.
 // data: event variables
-tcService.captureEvent(eventLabel, element, data);
+tcService.captureEvent(eventLabel, htmlElement, data);
 ```
 #### Trigger an event using `TcEventDirective`
 - Events can also be triggered by using the `TcEventDirective`. The event will be triggered when clicking the button.
@@ -218,7 +218,7 @@ const appRoutes: Routes = [
   }
 ];
 ```
-#### Exclusions //TODO check if still relevant
+#### Exclusions
 
 You can state an exclusion array to your options object like below:
 

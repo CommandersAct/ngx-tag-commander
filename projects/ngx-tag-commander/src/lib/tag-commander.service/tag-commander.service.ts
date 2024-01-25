@@ -162,10 +162,10 @@ export class TagCommanderService {
   //  * removes the var by specifying the key
   //  * @param {string} varKey
   //  */
-  removeTcVar(varKey: string): void {
+  removeTcVar(tcKey: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.debug_logger('removeTcVar', varKey);
-      delete this.winRef.nativeWindow.tc_vars[varKey];
+      this.debug_logger('removeTcVar', tcKey);
+      delete this.winRef.nativeWindow.tc_vars[tcKey];
     }
   }
 
@@ -220,22 +220,22 @@ export class TagCommanderService {
   //  */
   captureEvent(
     eventLabel: string,
-    element: any,
+    htmlElement: any,
     data: object,
     reloadCapture = false
   ) {
     if (isPlatformBrowser(this.platformId)) {
       if (reloadCapture !== true) {
-        this.debug_logger('captureEvent', eventLabel, element, data);
+        this.debug_logger('captureEvent', eventLabel, htmlElement, data);
         if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
           if (eventLabel in this.winRef.nativeWindow.tC.event) {
-            this.winRef.nativeWindow.tC.event[eventLabel](element, data);
+            this.winRef.nativeWindow.tC.event[eventLabel](htmlElement, data);
           }
           if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
             setTimeout(() => {
               this.captureEvent(
                 eventLabel,
-                element,
+                htmlElement,
                 data,
                 (reloadCapture = true)
               );
