@@ -16,12 +16,12 @@ export class TcEventDirective {
   @HostListener('click') onClick() {
     if (typeof this.tcEvent === 'object' && (this.tcEventLabel === undefined || this.tcEventObj === undefined)) {
       try {
-        this.tcService.captureEvent(this.tcEvent.eventLabel, this.el, this.tcEvent.data);
+        this.tcService.triggerEvent(this.tcEvent.eventLabel, this.el, this.tcEvent.data);
       } catch (e) {
         console.error(e);
       }
     } else {
-      this.tcService.captureEvent(this.tcEventLabel, this.el, this.tcEventObj);
+      this.tcService.triggerEvent(this.tcEventLabel, this.el, this.tcEventObj);
     }
   }
 }

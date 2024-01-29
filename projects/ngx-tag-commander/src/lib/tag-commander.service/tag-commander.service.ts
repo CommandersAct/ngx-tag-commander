@@ -13,6 +13,7 @@ export class TagCommanderService {
   pageEvent: any;
   _trackRoutes = false;
   debug: boolean;
+  captureEvent = this.triggerEvent
 
   debug_logger(...args: any[]) {
     if (this.debug) {
@@ -160,7 +161,7 @@ export class TagCommanderService {
 
   // /**
   //  * removes the var by specifying the key
-  //  * @param {string} varKey
+  //  * @param {string} tcKey
   //  */
   removeTcVar(tcKey: string): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -215,10 +216,10 @@ export class TagCommanderService {
   // /**
   //  * will set an TagCommander event
   //  * @param {string} eventLabel: the name of your event
-  //  * @param {HTMLElement} element: the HTMLElement on witch the event is attached
+  //  * @param {HTMLElement} htmlElement: the HTMLElement on witch the event is attached
   //  * @param {object} data: the data you want to transmit
   //  */
-  captureEvent(
+  triggerEvent(
     eventLabel: string,
     htmlElement: any,
     data: object,
@@ -226,14 +227,14 @@ export class TagCommanderService {
   ) {
     if (isPlatformBrowser(this.platformId)) {
       if (reloadCapture !== true) {
-        this.debug_logger('captureEvent', eventLabel, htmlElement, data);
+        this.debug_logger('triggerEvent', eventLabel, htmlElement, data);
         if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
           if (eventLabel in this.winRef.nativeWindow.tC.event) {
             this.winRef.nativeWindow.tC.event[eventLabel](htmlElement, data);
           }
           if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
             setTimeout(() => {
-              this.captureEvent(
+              this.triggerEvent(
                 eventLabel,
                 htmlElement,
                 data,

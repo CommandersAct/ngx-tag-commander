@@ -25,7 +25,7 @@ This service lets you integrate CommandersAct's tag container in your Angular ap
  - Automatic page tracking
  - Set & Get Variables
  - Reloading Containers
- - Event catching
+ - Event triggering
  - Multiple containers
 
 ## Angular Version Compatibility <a name="angular-version-compatibility"></a>
@@ -164,12 +164,13 @@ You can also use the directive `SetTcVarsDirective` to set variables directly on
 ### Events <a name="events"></a>
 
 - Refer to the [base documentation on events](https://doc.commandersact.com/features/sources/sources-catalog/web/containers/user-guides-for-browser-side-platform/tags/rules/triggers) for an understanding of events in general.
+- The method `triggerEvent` is the new name of the old method `captureEvent`; an alias has been added to ensure backward compatibility.
 ```typescript
 // Triggering an event
 // eventLabel: Name of the event as defined in the container
 // htmlElement: Calling context. Usually the HTML element on which the event is triggered, but it can be the component.
 // data: event variables
-tcService.captureEvent(eventLabel, htmlElement, data);
+tcService.triggerEvent(eventLabel, htmlElement, data);
 ```
 #### Trigger an event using `TcEventDirective`
 - Events can also be triggered by using the `TcEventDirective`. The event will be triggered when clicking the button.
@@ -263,17 +264,17 @@ This is important as the wrapper is interacting with the DOM objects `document` 
   - `vars`: Object containing the multiple variables to set or update
 - ```TagCommanderService.getTcVar(tcKey: string): any```
   - `tcKey`: Key of the variable to get
-- ```TagCommanderService.removeTcVar(varKey: string): void```
-  - `varKey`: Key of the variable to remove
+- ```TagCommanderService.removeTcVar(tcKey: string): void```
+  - `tcKey`: Key of the variable to remove
 - ```TagCommanderService.reloadAllContainers(options: object): number```
   - `options`: Options passed to ```tC.container.reload(options)```
-- ```TagCommanderServicereloadContainer(siteId: string, containerId: string, options: object): number```
+- ```TagCommanderService.reloadContainer(siteId: string, containerId: string, options: object): number```
   - `siteId`: Site id
   - `containerId` : Container Id
   - `options`: Options passed to```tC[containerId].reload(options)```
-- ```TagCommanderService.captureEvent(eventLabel: string, element: HTMLElement, data: object)```
+- ```TagCommanderService.triggerEvent(eventLabel: string, htmlElement: HTMLElement, data: object)```
   - `eventLabel`: Name of the event
-  - `element`: DOM element where the event is attached
+  - `htmlElement`: DOM element where the event is attached
   - `data`: Data sent with the event
 
 ## Sample app <a name="sample-app"></a>

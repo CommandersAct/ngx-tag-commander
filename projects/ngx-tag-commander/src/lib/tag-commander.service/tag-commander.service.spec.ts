@@ -356,7 +356,7 @@ describe('TagCommanderService', () => {
       expect(containerMock.reload).toHaveBeenCalledWith(options);
     });
 
-    it('captureEvent() should capture an event', async () => {
+    it('triggerEvent() should trigger an event correctly', async () => {
       // Input variables
       const eventLabel = 'onClick';
       const element = 'element';
@@ -370,10 +370,17 @@ describe('TagCommanderService', () => {
       spyOn(service, 'debug_logger').and.resolveTo();
 
       // Call function
+      service.triggerEvent(eventLabel, element, data);
+
+      // Assertions
+      expect(service.debug_logger).toHaveBeenCalledWith('triggerEvent', eventLabel, element, data);
+      expect(eventMock.onClick).toHaveBeenCalledWith(element, data);
+
+      // Alias should work
       service.captureEvent(eventLabel, element, data);
 
       // Assertions
-      expect(service.debug_logger).toHaveBeenCalledWith('captureEvent', eventLabel, element, data);
+      expect(service.debug_logger).toHaveBeenCalledWith('triggerEvent', eventLabel, element, data);
       expect(eventMock.onClick).toHaveBeenCalledWith(element, data);
     });
 

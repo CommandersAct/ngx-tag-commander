@@ -24,7 +24,7 @@ describe('TcEventDirective', () => {
   let mockTcService: jasmine.SpyObj<TagCommanderService>;
 
   beforeEach(() => {
-    mockTcService = jasmine.createSpyObj('TagCommanderService', ['captureEvent']);
+    mockTcService = jasmine.createSpyObj('TagCommanderService', ['triggerEvent']);
 
     TestBed.configureTestingModule({
       declarations: [TcEventDirective, ButtonWithoutLabelAndObjComponent, ButtonWithLabelAndObjComponent],
@@ -34,28 +34,28 @@ describe('TcEventDirective', () => {
     });
   });
 
-  it('should call captureEvent on click with tcEvent data if tcEventLabel or tcEventObj are not present and tcEvent is an object', () => {
+  it('should call triggerEvent on click with tcEvent data if tcEventLabel or tcEventObj are not present and tcEvent is an object', () => {
     const fixture = TestBed.createComponent(ButtonWithoutLabelAndObjComponent);
     const button = fixture.componentInstance;
     fixture.detectChanges();
     const element = fixture.nativeElement.querySelector('button');
     element.click();
 
-    expect(mockTcService.captureEvent).toHaveBeenCalledWith(
+    expect(mockTcService.triggerEvent).toHaveBeenCalledWith(
       button.event.eventLabel,
       new ElementRef(element),
       button.event.data
     );
   });
 
-  it('should call captureEvent on click with tcEventLabel and tcEventObj if tcEvent is not an object', () => {
+  it('should call triggerEvent on click with tcEventLabel and tcEventObj if tcEvent is not an object', () => {
     const fixture = TestBed.createComponent(ButtonWithLabelAndObjComponent);
     const button = fixture.componentInstance;
     fixture.detectChanges();
     const element = fixture.nativeElement.querySelector('button');
     element.click();
 
-    expect(mockTcService.captureEvent).toHaveBeenCalledWith(
+    expect(mockTcService.triggerEvent).toHaveBeenCalledWith(
       button.eventLabel,
       new ElementRef(element),
       button.eventObj
