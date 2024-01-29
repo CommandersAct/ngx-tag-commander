@@ -179,13 +179,13 @@ tcService.captureEvent(eventLabel, htmlElement, data);
 
 ### Reloading Containers <a name="reloading-containers"></a>
 
-#### 1 Manual Reload
+#### Manual Reload
 Update your container after any variable change.
 ```typescript
 tcService.reloadContainer(sideId, containerId, options);
 ```
 
-#### 2. On Route Change
+#### On Route Change
 Automatic reload can be performed on route change.
 1. Enable the service's route tracking in the app configuration:
 ```typescript
@@ -237,7 +237,7 @@ tcInclude: [{
     }
 }];
 ```
-Please see the [container's documentation](https://doc.commandersact.com/features/sources/sources-catalog/web/containers) for other options.
+Please see the [container's documentation](https://doc.commandersact.com/features/sources/sources-catalog/web/containers/setup-guides-for-developers/spa-implementation-guide#id-2.how-to-implement-tagcommander-in-an-spa-environment) for other options.
 
 ## Server-side Rendering (SSR) <a name="server-side-rendering"></a>
 `ngx-tag-commander` fully supports Server-side rendering (SSR), as it comes with an internal check to run the code only on the client-side.
