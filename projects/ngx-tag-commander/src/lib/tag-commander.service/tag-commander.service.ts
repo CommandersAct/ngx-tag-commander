@@ -1,8 +1,8 @@
 // our root app component
-import { Router, ActivationEnd } from '@angular/router';
-import { WindowRef } from './WindowRef';
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import {Router, ActivationEnd} from '@angular/router';
+import {WindowRef} from './WindowRef';
+import {Injectable, Inject, PLATFORM_ID} from '@angular/core';
+import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 
 /** @dynamic */
 @Injectable({
@@ -13,6 +13,7 @@ export class TagCommanderService {
   pageEvent: any;
   _trackRoutes = false;
   debug: boolean;
+  captureEvent = this.triggerEvent
 
   debug_logger(...args: any[]) {
     if (this.debug) {
@@ -44,13 +45,13 @@ export class TagCommanderService {
 
   // /**
   //  * the script URI correspond to the tag-commander script URL, it can either be a CDN URL or the path of your script
-  //  * @param {string} id the id the script node will have
-  //  * @param {string} uri the source of the script
-  //  * @param {string} node the node on witch the script will be placed, it can either be head or body
+  //  * @param {string} id: the id the script node will have
+  //  * @param {string} uri: the source of the script
+  //  * @param {string} node: the node on witch the script will be placed, it can either be head or body
   // */
   addContainer(id: string, uri: string, node: string): Promise<void> {
     return new Promise((resolve) => {
-      this._tcContainers.push({ id: id, uri: uri });
+      this._tcContainers.push({id: id, uri: uri});
       const tagContainer = this._doc.createElement('script');
       tagContainer.onload = () => resolve();
       tagContainer.setAttribute('type', 'text/javascript');
@@ -83,10 +84,13 @@ export class TagCommanderService {
     const container = this._doc.getElementById(id);
     const containers = this._tcContainers.slice(0);
 
-    this._doc.querySelector('head').removeChild(container);
-
     for (let i = 0; i < containers.length; i++) {
       if (containers[i].id === id) {
+        const node = containers[i].node.toLowerCase();
+        const parent = this._doc.getElementsByTagName(node)[0];
+        if (parent && container && container.parentNode === parent) {
+          parent.removeChild(container);
+        }
         this._tcContainers.splice(i, 1);
       }
     }
@@ -94,7 +98,7 @@ export class TagCommanderService {
 
   // /**
   //  * will display the debug messages if true
-  //  * @param {boolean} debug if set to true it will activate the debug msg default is false
+  //  * @param {boolean} debug: if set to true it will activate the debug msg default is false
   //  */
   setDebug(debug: boolean): void {
     this.debug = debug;
@@ -102,7 +106,7 @@ export class TagCommanderService {
 
   // /**
   //  * allows the router to be tracked
-  //  * @param {boolean} b will read routes if set to true
+  //  * @param {boolean} b: will read routes if set to true
   //  */
   trackRoutes(b: boolean): void {
     this._trackRoutes = !!b;
@@ -113,7 +117,7 @@ export class TagCommanderService {
   //  * @param {string} tcKey
   //  * @param {*} tcVar
   //  */
-  setTcVar(tcKey: string, tcVar: any) {
+  setTcVar(tcKey: string, tcVar: any): void {
     if (isPlatformBrowser(this.platformId)) {
       if (!this.winRef.nativeWindow.tc_vars) {
         throw new Error(
@@ -125,7 +129,7 @@ export class TagCommanderService {
   }
 
   // /**
-  //  * set your varibles for the different providers, when called the first time it
+  //  * set your variables for the different providers, when called the first time it
   //  * instantiate the external variable
   //  * @param {object} vars
   //  */
@@ -145,8 +149,8 @@ export class TagCommanderService {
   //  */
   getTcVar(tcKey: string): any {
     if (isPlatformBrowser(this.platformId)) {
-      this.debug_logger('getTcVars', tcKey);
-      if (this.winRef.nativeWindow.tc_vars[tcKey] === null) {
+      this.debug_logger('getTcVar', tcKey);
+      if (this.winRef.nativeWindow.tc_vars[tcKey] === null || this.winRef.nativeWindow.tc_vars[tcKey] === undefined) {
         throw new Error(
           '[ngx-tag-commander]tc_var is undefined. Check that it\'s properly initialized'
         );
@@ -157,18 +161,18 @@ export class TagCommanderService {
 
   // /**
   //  * removes the var by specifying the key
-  //  * @param {string} varKey
+  //  * @param {string} tcKey
   //  */
-  removeTcVar(varKey: string): void {
+  removeTcVar(tcKey: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.debug_logger('removeTcVars', varKey);
-      delete this.winRef.nativeWindow.tc_vars[varKey];
+      this.debug_logger('removeTcVar', tcKey);
+      delete this.winRef.nativeWindow.tc_vars[tcKey];
     }
   }
 
   // /**
   //  * will reload all the containers
-  //  * @param {object} options can contain some options in a form of an object
+  //  * @param {object} options: can contain some options in a form of an object
   //  */
   reloadAllContainers(options: object = {}): number {
     if (isPlatformBrowser(this.platformId)) {
@@ -189,20 +193,20 @@ export class TagCommanderService {
   //  * will reload the specified container
   //  * @param {number} siteId
   //  * @param {number} idc
-  //  * @param {object} options can contain some options in a form of an object
+  //  * @param {object} options: can contain some options in a form of an object
   //  */
   reloadContainer(siteId: string, containerId: string, options: object): number {
     if (isPlatformBrowser(this.platformId)) {
       options = options || {};
-      this.debug_logger(
-        'Reload container ids: ' + siteId + ' idc: ' + containerId,
-        typeof options === 'object' ? 'with options: ' : '', options || ''
-      );
       if (!this.winRef.nativeWindow.tC) {
         return window.setTimeout(() => {
           this.reloadContainer(siteId, containerId, options);
         }, 1000);
       }
+      this.debug_logger(
+        'Reload container ids: ' + siteId + ' idc: ' + containerId,
+        typeof options === 'object' ? 'with options: ' : '', options || ''
+      );
       this.winRef.nativeWindow.tC['container_' + siteId + '_' + containerId].reload(
         options
       );
@@ -211,28 +215,28 @@ export class TagCommanderService {
 
   // /**
   //  * will set an TagCommander event
-  //  * @param {string} eventLabel the name of your event
-  //  * @param {HTMLElement} element the HTMLelement on witch the event is attached
-  //  * @param {object} data the data you want to transmit
+  //  * @param {string} eventLabel: the name of your event
+  //  * @param {HTMLElement} htmlElement: the HTMLElement on witch the event is attached
+  //  * @param {object} data: the data you want to transmit
   //  */
-  captureEvent(
+  triggerEvent(
     eventLabel: string,
-    element: any,
+    htmlElement: any,
     data: object,
     reloadCapture = false
   ) {
     if (isPlatformBrowser(this.platformId)) {
       if (reloadCapture !== true) {
-        this.debug_logger('captureEvent', eventLabel, element, data);
+        this.debug_logger('triggerEvent', eventLabel, htmlElement, data);
         if (typeof this.winRef.nativeWindow.tC !== 'undefined') {
           if (eventLabel in this.winRef.nativeWindow.tC.event) {
-            this.winRef.nativeWindow.tC.event[eventLabel](element, data);
+            this.winRef.nativeWindow.tC.event[eventLabel](htmlElement, data);
           }
           if (!(eventLabel in this.winRef.nativeWindow.tC.event)) {
             setTimeout(() => {
-              this.captureEvent(
+              this.triggerEvent(
                 eventLabel,
-                element,
+                htmlElement,
                 data,
                 (reloadCapture = true)
               );

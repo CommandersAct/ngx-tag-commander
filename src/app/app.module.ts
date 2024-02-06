@@ -14,6 +14,8 @@ import { TagCommanderService } from 'ngx-tag-commander';
 import { WindowRef } from 'ngx-tag-commander';
 
 import { NgxTagCommanderModule } from 'ngx-tag-commander';
+import {MarkdownModule} from 'ngx-markdown';
+import {HttpClientModule} from '@angular/common/http';
 
 
 const appRoutes: Routes = [
@@ -84,19 +86,16 @@ const appRoutes: Routes = [
     DashboardPageComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(appRoutes, {}),
     BrowserModule,
     AppRoutingModule,
-    NgxTagCommanderModule
+    NgxTagCommanderModule,
+    MarkdownModule.forRoot(),
+    HttpClientModule
   ],
   providers: [WindowRef],
   bootstrap: [AppComponent]
 })
-
-
-
-
-
 export class AppModule {
   constructor(tcService: TagCommanderService) {
     tcService.setDebug(true);

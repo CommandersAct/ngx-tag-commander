@@ -11,14 +11,14 @@ export class ShopPageComponent implements OnInit {
 
   pageItem: Item = {
     id: '1',
-    name: 'TagCommander',
+    name: 'Shop Item 1',
     price: 20,
     quantity: 0
   };
   cartItems: Array<Item> = [
     {
       id: '2',
-      name: 'TagCommanderBis',
+      name: 'Shop Item 2',
       price: 90,
       quantity: 2
     }

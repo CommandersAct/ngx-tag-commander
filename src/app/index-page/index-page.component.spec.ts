@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { IndexPageComponent } from './index-page.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('IndexPageComponent', () => {
   let component: IndexPageComponent;
@@ -8,6 +9,7 @@ describe('IndexPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
       declarations: [ IndexPageComponent ]
     })
     .compileComponents();

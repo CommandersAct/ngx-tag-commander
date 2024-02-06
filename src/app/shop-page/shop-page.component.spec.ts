@@ -1,6 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { ShopPageComponent } from './shop-page.component';
+import {ShopPageComponent} from './shop-page.component';
+import {WindowRef} from 'ngx-tag-commander';
+
+class MockWindowRef {
+  nativeWindow = {tc_vars: {}};
+}
 
 describe('ShopPageComponent', () => {
   let component: ShopPageComponent;
@@ -8,9 +13,10 @@ describe('ShopPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShopPageComponent ]
+      declarations: [ShopPageComponent],
+      providers: [{provide: WindowRef, useClass: MockWindowRef}]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-index-page',
@@ -6,11 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index-page.component.scss']
 })
 export class IndexPageComponent implements OnInit {
+  markdown: string | undefined;
+  constructor(private http: HttpClient) {}
 
-  constructor() {
+  async ngOnInit() {
+    this.markdown = await firstValueFrom(this.http.get('/assets/Documentation.md', {responseType: 'text'}));
   }
-
-  ngOnInit() {
-  }
-
 }

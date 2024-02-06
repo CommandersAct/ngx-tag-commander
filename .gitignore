@@ -39,7 +39,11 @@ yarn-error.log
 testem.log
 /typings
 .tool-versions
+/.angular/cache
 
 # System Files
 .DS_Store
 Thumbs.db
+
+# Sample App Documentation
+/src/assets/documentation.md
