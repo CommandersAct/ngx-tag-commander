@@ -48,8 +48,9 @@ export class TagCommanderService {
   //  * @param {string} id: the id the script node will have
   //  * @param {string} uri: the source of the script
   //  * @param {string} node: the node on witch the script will be placed, it can either be head or body
+  //  * @param {array} args: contains extra args for script tag like crossorigin
   // */
-  addContainer(id: string, uri: string, node: string): Promise<void> {
+  addContainer(id: string, uri: string, node: string, args: [string, string][]): Promise<void> {
     return new Promise((resolve) => {
       this._tcContainers.push({id: id, uri: uri});
       const tagContainer = this._doc.createElement('script');
@@ -57,6 +58,9 @@ export class TagCommanderService {
       tagContainer.setAttribute('type', 'text/javascript');
       tagContainer.setAttribute('src', uri);
       tagContainer.setAttribute('id', id);
+      if (Array.isArray(args) && args.length > 0) {
+        args.forEach(([key, value]) => tagContainer.setAttribute(key, value));
+      }
       if (typeof node !== 'string') {
         this.debug_logger(
           'you didn\'t specify where you wanted to place the script, it will be placed in the head by default'
