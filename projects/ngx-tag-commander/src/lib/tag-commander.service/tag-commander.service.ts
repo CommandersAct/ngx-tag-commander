@@ -50,7 +50,7 @@ export class TagCommanderService {
   //  * @param {string} node: the node on witch the script will be placed, it can either be head or body
   //  * @param {array} args: contains extra args for script tag like crossorigin
   // */
-  addContainer(id: string, uri: string, node: string, args: [string, string][]): Promise<void> {
+  addContainer(id: string, uri: string, node: string, args: [string, string][] = []): Promise<void> {
     return new Promise((resolve) => {
       this._tcContainers.push({id: id, uri: uri});
       const tagContainer = this._doc.createElement('script');
