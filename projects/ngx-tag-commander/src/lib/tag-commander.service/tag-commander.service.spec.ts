@@ -128,6 +128,46 @@ describe('TagCommanderService', () => {
       expect(mockBody.appendChild).not.toHaveBeenCalled();
     });
 
+    it('addContainer() should add a container with custom attribute', async () => {
+      // Input variables
+      const id = 'someId';
+      const uri = 'http://example.com/script.js';
+      const node = 'someNode';
+
+      // Mocks
+      const mockHead = jasmine.createSpyObj('HTMLHeadElement', ['appendChild']);
+      const mockBody = jasmine.createSpyObj('HTMLBodyElement', ['appendChild']);
+      const mockContainerScriptElement = jasmine.createSpyObj('HTMLScriptElement', ['setAttribute', 'onload']);
+      spyOn(document, 'createElement').and.returnValue(mockContainerScriptElement);
+      spyOn(document, 'querySelector').and.callFake((selector: string) => {
+        if (selector === 'head') {
+          return mockHead;
+        }
+        if (selector === 'body') {
+          return mockBody;
+        }
+        return null;
+      });
+
+      // Call function
+      const addContainerPromise = service.addContainer(id, uri, node, [['crossorigin', 'anonymous']]);
+
+      mockContainerScriptElement.onload(null);
+
+      await addContainerPromise;
+
+      // Assertions
+      expect(service['_tcContainers']).toContain({id: id, uri: uri});
+      expect(document.createElement).toHaveBeenCalledWith('script');
+      expect(mockContainerScriptElement.setAttribute).toHaveBeenCalledTimes(4);
+      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(1, 'type', 'text/javascript');
+      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(2, 'src', uri);
+      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(3, 'id', id);
+      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(4, 'crossorigin', 'anonymous');
+      expect(mockHead.appendChild).toHaveBeenCalledWith(mockContainerScriptElement);
+      expect(mockBody.appendChild).not.toHaveBeenCalled();
+    });
+
     it('removeContainer() should remove a container if it exists', () => {
       const id = 'existingId';
       const uri = 'someUrl';
