@@ -133,7 +133,7 @@ describe('TagCommanderService', () => {
       const id = 'someId';
       const uri = 'http://example.com/script.js';
       const node = 'someNode';
-
+    
       // Mocks
       const mockHead = jasmine.createSpyObj('HTMLHeadElement', ['appendChild']);
       const mockBody = jasmine.createSpyObj('HTMLBodyElement', ['appendChild']);
@@ -148,25 +148,27 @@ describe('TagCommanderService', () => {
         }
         return null;
       });
-
+    
       // Call function
       const addContainerPromise = service.addContainer(id, uri, node, [['crossorigin', 'anonymous']]);
-
+    
       mockContainerScriptElement.onload(null);
-
+    
       await addContainerPromise;
-
+    
       // Assertions
-      expect(service['_tcContainers']).toContain({id: id, uri: uri});
+      expect(service['_tcContainers']).toContain({ id: id, uri: uri });
       expect(document.createElement).toHaveBeenCalledWith('script');
       expect(mockContainerScriptElement.setAttribute).toHaveBeenCalledTimes(4);
-      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(1, 'type', 'text/javascript');
-      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(2, 'src', uri);
-      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(3, 'id', id);
-      expect(mockContainerScriptElement.setAttribute).toHaveBeenNthCalledWith(4, 'crossorigin', 'anonymous');
+      
+      expect(mockContainerScriptElement.setAttribute.calls.argsFor(0)).toEqual(['type', 'text/javascript']);
+      expect(mockContainerScriptElement.setAttribute.calls.argsFor(1)).toEqual(['src', uri]);
+      expect(mockContainerScriptElement.setAttribute.calls.argsFor(2)).toEqual(['id', id]);
+      expect(mockContainerScriptElement.setAttribute.calls.argsFor(3)).toEqual(['crossorigin', 'anonymous']);
+      
       expect(mockHead.appendChild).toHaveBeenCalledWith(mockContainerScriptElement);
       expect(mockBody.appendChild).not.toHaveBeenCalled();
-    });
+    });    
 
     it('removeContainer() should remove a container if it exists', () => {
       const id = 'existingId';
